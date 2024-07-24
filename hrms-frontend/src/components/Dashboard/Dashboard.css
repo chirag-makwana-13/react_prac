@@ -1,0 +1,26 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-section {
+  margin-bottom: 20px;
+}
+
+.dashboard-section h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.dashboard-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dashboard-section li {
+  margin-bottom: 5px;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
