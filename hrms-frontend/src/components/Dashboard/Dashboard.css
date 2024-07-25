@@ -1,13 +1,53 @@
+/* src/components/Dashboard/Dashboard.css */
 .dashboard-container {
+  width: 90%;
+  margin: 0 auto;
   padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-nav {
+  background-color: #333;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dashboard-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-nav li {
+  float: left;
+}
+
+.dashboard-nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dashboard-nav li a:hover {
+  background-color: #111;
+}
+
+.dashboard-container h1 {
+  text-align: center;
+  color: #333;
 }
 
 .dashboard-section {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .dashboard-section h2 {
-  font-size: 1.5em;
+  color: #333;
   margin-bottom: 10px;
 }
 
@@ -16,11 +56,40 @@
   padding: 0;
 }
 
-.dashboard-section li {
-  margin-bottom: 5px;
+.dashboard-section ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dashboard-section ul li:last-child {
+  border-bottom: none;
 }
 
 .error-message {
   color: red;
-  font-weight: bold;
+  text-align: center;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 5px 10px;
+  margin: 0 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #ddd;
 }
