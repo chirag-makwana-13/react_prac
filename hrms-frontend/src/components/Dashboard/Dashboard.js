@@ -1,14 +1,13 @@
-// src/components/Dashboard/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import axios from '../../api';
-import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
 const Dashboard = () => {
     const [birthdays, setBirthdays] = useState([]);
     const [holidays, setHolidays] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [holidaysPerPage] = useState(5);
+    const [currentHolidayPage, setCurrentHolidayPage] = useState(1);
+    const [currentBirthdayPage, setCurrentBirthdayPage] = useState(1);
+    const [itemsPerPage] = useState(1); // Show one item per page
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -30,47 +29,97 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    const indexOfLastHoliday = currentPage * holidaysPerPage;
-    const indexOfFirstHoliday = indexOfLastHoliday - holidaysPerPage;
-    const currentHolidays = holidays.slice(indexOfFirstHoliday, indexOfLastHoliday);
+    const indexOfLastHoliday = currentHolidayPage * itemsPerPage;
+    const indexOfFirstHoliday = indexOfLastHoliday - itemsPerPage;
+    const currentHoliday = holidays.slice(indexOfFirstHoliday, indexOfLastHoliday);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const indexOfLastBirthday = currentBirthdayPage * itemsPerPage;
+    const indexOfFirstBirthday = indexOfLastBirthday - itemsPerPage;
+    const currentBirthday = birthdays.slice(indexOfFirstBirthday, indexOfLastBirthday);
+
+    const handleHolidayPagination = (direction) => {
+        setCurrentHolidayPage(prevPage => {
+            const newPage = direction === 'next' ? prevPage + 1 : prevPage - 1;
+            return newPage > 0 && newPage <= Math.ceil(holidays.length / itemsPerPage) ? newPage : prevPage;
+        });
+    };
+
+    const handleBirthdayPagination = (direction) => {
+        setCurrentBirthdayPage(prevPage => {
+            const newPage = direction === 'next' ? prevPage + 1 : prevPage - 1;
+            return newPage > 0 && newPage <= Math.ceil(birthdays.length / itemsPerPage) ? newPage : prevPage;
+        });
+    };
 
     return (
         <div className="dashboard-container">
-
             <h1>Dashboard</h1>
             {error && <p className="error-message">{error}</p>}
+
+            {/* Birthday Section */}
             <section className="dashboard-section">
                 <h2>Birthday List</h2>
-                {birthdays.length > 0 ? (
-                    <ul>
-                        {birthdays.map(birthday => (
-                            <li key={birthday.id}>{birthday.username} - {birthday.dob}</li>
+                {currentBirthday.length > 0 ? (
+                    <div className="card">
+                        {currentBirthday.map(birthday => (
+                            <div key={birthday.id} className="birthday-card">
+                                <h3>{birthday.first_name} {birthday.last_name}</h3>
+                                <p>Date of Birth: {new Date(birthday.dob).toLocaleDateString('en-US', { day: '2-digit', month: 'long' })}</p>
+                            </div>
                         ))}
-                    </ul>
+                        <div className="pagination">
+                            <button 
+                                onClick={() => handleBirthdayPagination('prev')} 
+                                disabled={currentBirthdayPage === 1}
+                                className="pagination-button"
+                            >
+                                &lt;
+                            </button>
+                            <button 
+                                onClick={() => handleBirthdayPagination('next')} 
+                                disabled={currentBirthdayPage === Math.ceil(birthdays.length / itemsPerPage)}
+                                className="pagination-button"
+                            >
+                                &gt;
+                            </button>
+                        </div>
+                    </div>
                 ) : (
                     <p>No upcoming birthdays.</p>
                 )}
             </section>
+
+            {/* Holiday Section */}
             <section className="dashboard-section">
                 <h2>Holiday List</h2>
-                {currentHolidays.length > 0 ? (
-                    <ul>
-                        {currentHolidays.map(holiday => (
-                            <li key={holiday.id}>{holiday.name} - {holiday.date}</li>
+                {currentHoliday.length > 0 ? (
+                    <div className="card">
+                        {currentHoliday.map(holiday => (
+                            <div key={holiday.id} className="holiday-card">
+                                <h1>{holiday.name}</h1>
+                                <p> {new Date(holiday.date).toLocaleDateString('en-US', { day: '2-digit', month: 'long' })}</p>
+                            </div>
                         ))}
-                    </ul>
+                        <div className="pagination">
+                            <button 
+                                onClick={() => handleHolidayPagination('prev')} 
+                                disabled={currentHolidayPage === 1}
+                                className="pagination-button"
+                            >
+                                &lt;
+                            </button>
+                            <button 
+                                onClick={() => handleHolidayPagination('next')} 
+                                disabled={currentHolidayPage === Math.ceil(holidays.length / itemsPerPage)}
+                                className="pagination-button"
+                            >
+                                &gt;
+                            </button>
+                        </div>
+                    </div>
                 ) : (
                     <p>No upcoming holidays.</p>
                 )}
-                <div className="pagination">
-                    {Array.from({ length: Math.ceil(holidays.length / holidaysPerPage) }, (_, i) => (
-                        <button key={i + 1} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? 'active' : ''}>
-                            {i + 1}
-                        </button>
-                    ))}
-                </div>
             </section>
         </div>
     );

@@ -1,95 +1,75 @@
-/* src/components/Dashboard/Dashboard.css */
 .dashboard-container {
-  width: 90%;
-  margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-nav {
-  background-color: #333;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.dashboard-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.dashboard-nav li {
-  float: left;
-}
-
-.dashboard-nav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.dashboard-nav li a:hover {
-  background-color: #111;
-}
-
-.dashboard-container h1 {
-  text-align: center;
-  color: #333;
+  margin-top: -190px;
+  margin-left: 30px;
 }
 
 .dashboard-section {
-  margin: 20px 0;
+  margin-bottom: 20px;
 }
 
 .dashboard-section h2 {
+  font-size: 24px;
   color: #333;
   margin-bottom: 10px;
 }
 
-.dashboard-section ul {
-  list-style-type: none;
-  padding: 0;
+.card {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 250px;
 }
 
-.dashboard-section ul li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+.birthday-card, .holiday-card {
+  margin-bottom: 15px;
 }
 
-.dashboard-section ul li:last-child {
-  border-bottom: none;
+.birthday-card h3 {
+  font-size: 22px;
+  margin: 0;
+  color: #333;
 }
 
-.error-message {
-  color: red;
-  text-align: center;
+.birthday-card p {
+  font-size: 18px;
+  color: #666;
+}
+
+.holiday-card h1 {
+  font-size: 28px;
+  color: #007bff;
+}
+
+.holiday-card p {
+  font-size: 18px;
+  color: #666;
 }
 
 .pagination {
-  text-align: center;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.pagination button {
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  color: #333;
-  padding: 5px 10px;
-  margin: 0 2px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.pagination button.active {
+.pagination-button {
+  padding: 10px;
   background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.pagination button:hover:not(.active) {
+.pagination-button:hover {
+  background-color: #0056b3;
+}
+
+.pagination-button:disabled {
   background-color: #ddd;
+  cursor: not-allowed;
 }

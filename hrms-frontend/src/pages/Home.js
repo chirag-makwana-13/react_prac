@@ -17,19 +17,3 @@ const Home = () => {
 
 export default Home;
 
-
-// import React from 'react';
-// import EmployeeList from '../components/Employee/EmployeeList';
-// import BirthdayList from '../components/Birthday/BirthdayList';
-
-// const Home = () => {
-//     return (
-//         <div>
-//             <h1>Welcome to HRMS</h1>
-//             <EmployeeList />
-//             <BirthdayList />
-//         </div>
-//     );
-// };
-
-// export default Home;
