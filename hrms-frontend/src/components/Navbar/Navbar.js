@@ -1,9 +1,9 @@
+// src/components/Navbar/Navbar.js
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = () => {
-    const navigate = useNavigate();
+const Navbar = ({ handleLogout }) => {
     const location = useLocation();
     const [activeLink, setActiveLink] = useState('');
 
@@ -11,11 +11,6 @@ const Navbar = () => {
         const path = location.pathname.split('/')[1];
         setActiveLink(path ? path : 'home');
     }, [location]);
-
-    const handleLogout = () => {
-        localStorage.clear();
-        navigate('/login');
-    };
 
     return (
         <div className="navbar-container">
@@ -30,12 +25,6 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link to="/employees" className={activeLink === 'employees' ? 'active' : ''}>Employees</Link>
-                    </li>
-                    <li>
-                        <Link to="/login" className={activeLink === 'login' ? 'active' : ''}>Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/register" className={activeLink === 'register' ? 'active' : ''}>Register</Link>
                     </li>
                 </ul>
                 <button onClick={handleLogout} className="logout-button">Logout</button>

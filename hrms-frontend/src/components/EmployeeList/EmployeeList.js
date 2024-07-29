@@ -8,6 +8,7 @@ const EmployeeList = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [editingEmployee, setEditingEmployee] = useState(null);
     const [deletingEmployee, setDeletingEmployee] = useState(null);
+    const [message, setMessage] = useState('');
     const [formData, setFormData] = useState({
         username: '',
         first_name: '',
@@ -42,6 +43,7 @@ const EmployeeList = () => {
         try {
             await axios.delete(`/employees/${id}/`);
             setEmployees(employees.filter(employee => employee.id !== id));
+            setMessage('Employee deleted successfully');
             setDeletingEmployee(null);
         } catch (error) {
             console.error('Error deleting employee:', error);
@@ -74,6 +76,7 @@ const EmployeeList = () => {
         try {
             await axios.put(`/employees/${id}/`, formData);
             setEmployees(employees.map(emp => (emp.id === id ? { ...emp, ...formData } : emp)));
+            setMessage('Employee updated successfully');
             setEditingEmployee(null);
         } catch (error) {
             console.error('Error updating employee:', error);
@@ -85,6 +88,7 @@ const EmployeeList = () => {
         <div className="employee-list-container">
             <h1>Employee List</h1>
             {error && <p className="error-message">{error}</p>}
+            {message && <p className="message">{message}</p>}
             {employees.length > 0 ? (
                 <table className="employee-table">
                     <thead>
@@ -119,8 +123,8 @@ const EmployeeList = () => {
                                 <td>{employee.address}</td>
                                 {isAdmin && (
                                     <td>
-                                        <button onClick={() => setDeletingEmployee(employee.id)}>Delete</button>
-                                        <button onClick={() => handleEdit(employee)}>Edit</button>
+                                        <button className="edit-button" onClick={() => handleEdit(employee)}>Edit</button>
+                                        <button className="delete-button" onClick={() => setDeletingEmployee(employee.id)}>Delete</button>
                                     </td>
                                 )}
                             </tr>

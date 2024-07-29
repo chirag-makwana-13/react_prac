@@ -99,3 +99,7 @@ body {
   width: calc(100% - 200px);
   margin-top: -93px;
 }
+
+.content.authenticated {
+  margin-left: 220px; /* Adjust this based on the navbar width */
+}

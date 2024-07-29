@@ -1,35 +1,37 @@
-// src/components/Auth/Login.js
+// src/components/Auth/ForgetPassword.js
 import React, { useState } from 'react';
 import axios from '../../api';
-import { Link, useNavigate } from 'react-router-dom';
-import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import './ForgetPassword.css';
 
-const Login = ({ onLogin }) => {
+const ForgetPassword = () => {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/login/', {
+            const response = await axios.post('/forgetpassword/', {
                 username,
-                password,
+                new_password: newPassword,
             });
-            localStorage.setItem('access', response.data.access);
-            localStorage.setItem('refresh', response.data.refresh);
-            onLogin();
-            navigate('/dashboard');
+            setMessage(response.data.message);
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000); // Redirect after 2 seconds
         } catch (error) {
-            setError('Invalid username or password');
+            setError(error.response.data.message);
         }
     };
 
     return (
-        <div className="login-form-container">
-            <div className="login-form">
-                <h2>Login</h2>
+        <div className="forget-password-form-container">
+            <div className="forget-password-form">
+                <h2>Reset Password</h2>
+                {message && <p className="message">{message}</p>}
                 {error && <p className="error">{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -42,22 +44,19 @@ const Login = ({ onLogin }) => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Password:</label>
+                        <label>New Password:</label>
                         <input
                             type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
                             required
                         />
                     </div>
-                    <button type="submit" className="login-button">Login</button>
-                    <p>
-                        <Link to="/forgetpassword">Forget Password?</Link>
-                    </p>
+                    <button type="submit" className="reset-button">Reset Password</button>
                 </form>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default ForgetPassword;
