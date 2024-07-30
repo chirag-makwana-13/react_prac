@@ -8,7 +8,6 @@ const Dashboard = () => {
     const [currentHolidayPage, setCurrentHolidayPage] = useState(1);
     const [currentBirthdayPage, setCurrentBirthdayPage] = useState(1);
     const [itemsPerPage] = useState(1);
-    const [logs, setLogs] = useState([]);
     const [error, setError] = useState('');
     const [buttonsState, setButtonsState] = useState({
         checkIn: false,
@@ -20,16 +19,13 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [birthdaysResponse, holidaysResponse, logsResponse] = await Promise.all([
+                const [birthdaysResponse, holidaysResponse] = await Promise.all([
                     axios.get('/birthdays/'),
                     axios.get('/holidays/'),
-                    // axios.get('/logs/')
                 ]);
 
                 setBirthdays(birthdaysResponse.data);
                 setHolidays(holidaysResponse.data);
-                setLogs(logsResponse.data);
-                updateButtonStates(logsResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError('Failed to load data. Please try again later.');
@@ -39,30 +35,22 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    const updateButtonStates = (logs) => {
-        // Logic to update button states based on logs
-        const todayLogs = logs.filter(log => new Date(log.date).toDateString() === new Date().toDateString());
-
-        if (todayLogs.some(log => log.checkIn)) {
-            setButtonsState(prevState => ({ ...prevState, checkIn: true, breakIn: false }));
-        }
-        if (todayLogs.some(log => log.breakIn)) {
-            setButtonsState(prevState => ({ ...prevState, breakIn: true, breakOut: false }));
-        }
-        if (todayLogs.some(log => log.breakOut)) {
-            setButtonsState(prevState => ({ ...prevState, breakOut: true, breakIn: false, checkOut: false }));
-        }
-        if (todayLogs.some(log => log.checkOut)) {
-            setButtonsState(prevState => ({ ...prevState, checkOut: true }));
-        }
-    };
-
     const handleAction = async (action) => {
         try {
             await axios.post(`/${action}/`);
-            setLogs(prevLogs => [...prevLogs, { action, date: new Date() }]);
-            updateButtonStates([...logs, { action, date: new Date() }]);
+
+            // Update button states based on the action performed
+            if (action === 'checkin') {
+                setButtonsState({ checkIn: true, breakIn: false, breakOut: true, checkOut: true });
+            } else if (action === 'breakin') {
+                setButtonsState({ checkIn: true, breakIn: true, breakOut: false, checkOut: true });
+            } else if (action === 'breakout') {
+                setButtonsState({ checkIn: true, breakIn: false, breakOut: true, checkOut: false });
+            } else if (action === 'checkout') {
+                setButtonsState({ checkIn: true, breakIn: true, breakOut: true, checkOut: true });
+            }
         } catch (error) {
+            console.error(`Failed to ${action}:`, error);
             setError(`Failed to ${action}. Please try again later.`);
         }
     };
@@ -161,43 +149,33 @@ const Dashboard = () => {
                 {error && <p className="error-message">{error}</p>}
                 <div className="actions">
                     <button 
-                        onClick={() => handleAction('checkIn')} 
+                        onClick={() => handleAction('checkin')} 
                         disabled={buttonsState.checkIn} 
                         className={buttonsState.checkIn ? 'disabled' : ''}
                     >
                         Check In
                     </button>
                     <button 
-                        onClick={() => handleAction('breakIn')} 
+                        onClick={() => handleAction('breakin')} 
                         disabled={buttonsState.breakIn} 
                         className={buttonsState.breakIn ? 'disabled' : ''}
                     >
                         Break In
                     </button>
                     <button 
-                        onClick={() => handleAction('breakOut')} 
+                        onClick={() => handleAction('breakout')} 
                         disabled={buttonsState.breakOut} 
                         className={buttonsState.breakOut ? 'disabled' : ''}
                     >
                         Break Out
                     </button>
                     <button 
-                        onClick={() => handleAction('checkOut')} 
+                        onClick={() => handleAction('checkout')} 
                         disabled={buttonsState.checkOut} 
                         className={buttonsState.checkOut ? 'disabled' : ''}
                     >
                         Check Out
                     </button>
-                </div>
-                <div className="logs">
-                    <h2>Logs</h2>
-                    <ul>
-                        {logs.map((log, index) => (
-                            <li key={index}>
-                                {log.action} - {new Date(log.date).toLocaleString()}
-                            </li>
-                        ))}
-                    </ul>
                 </div>
             </div>
         </div>

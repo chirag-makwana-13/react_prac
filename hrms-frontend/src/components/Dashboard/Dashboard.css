@@ -1,76 +1,110 @@
 .dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-  margin-top: -121px;
-  margin-left: 30px;
+  background-color: #f9f9f9;
+}
+
+.upper-dashboard {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 40px;
 }
 
 .dashboard-section {
-  margin-bottom: 20px;
-}
-
-.dashboard-section h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
+  flex: 1;
+  margin: 0 10px;
 }
 
 .card {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 250px;
-  border-left: 6px solid #002F4B;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .birthday-card, .holiday-card {
-  margin-bottom: 15px;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.birthday-card h3 {
-  font-size: 22px;
-  margin: 0;
-  color: #333;
-}
-
-.birthday-card p {
-  font-size: 18px;
-  color: #666;
-}
-
-.holiday-card h1 {
-  font-size: 28px;
-  color: #00629b;
-}
-
-.holiday-card p {
-  font-size: 18px;
-  color: #666;
+.birthday-card h3, .holiday-card h1 {
+  margin-bottom: 10px;
+  color: #007bff;
 }
 
 .pagination {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .pagination-button {
-  padding: 10px;
-  background-color: #002F4B;
+  background: #007bff;
   color: white;
   border: none;
-  border-radius: 50%;
+  padding: 10px 20px;
+  margin: 0 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.pagination-button:hover {
-  background-color: rgb(3, 112, 228);
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .pagination-button:disabled {
-  background-color: #ddd;
+  background: #ccc;
   cursor: not-allowed;
+}
+
+.pagination-button:hover:enabled {
+  background: #0056b3;
+}
+
+.lower-dashboard {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.actions button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.actions button.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.actions button:hover:not(.disabled) {
+  background: #0056b3;
+}
+
+.logs {
+  text-align: center;
+}
+
+.logs h2 {
+  margin-bottom: 20px;
+}
+
+.logs ul {
+  list-style: none;
+  padding: 0;
+}
+
+.logs li {
+  margin-bottom: 10px;
 }
