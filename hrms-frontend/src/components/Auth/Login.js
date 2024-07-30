@@ -1,4 +1,3 @@
-// src/components/Auth/Login.js
 import React, { useState } from 'react';
 import axios from '../../api';
 import { Link, useNavigate } from 'react-router-dom';
@@ -51,8 +50,11 @@ const Login = ({ onLogin }) => {
                         />
                     </div>
                     <button type="submit" className="login-button">Login</button>
-                    <p>
-                        <Link to="/forgetpassword">Forget Password?</Link>
+                    <p className='p'>
+                        <Link to="/forgetpassword" style={{ textDecoration: 'none' }}>Forget Password?</Link>
+                    </p>
+                    <p className='p'>
+                        <Link to="/register" style={{ textDecoration: 'none' }}>New Registration</Link>
                     </p>
                 </form>
             </div>

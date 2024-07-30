@@ -104,6 +104,7 @@ const EmployeeList = () => {
                             <th>Date of Joining</th>
                             <th>Phone Number</th>
                             <th>Address</th>
+                            <th>Bio</th>
                             {isAdmin && <th>Actions</th>}
                         </tr>
                     </thead>
@@ -121,6 +122,7 @@ const EmployeeList = () => {
                                 <td>{employee.date_of_joining}</td>
                                 <td>{employee.phone_number}</td>
                                 <td>{employee.address}</td>
+                                <td>{employee.bio}</td>
                                 {isAdmin && (
                                     <td>
                                         <button className="edit-button" onClick={() => handleEdit(employee)}>Edit</button>
@@ -158,6 +160,8 @@ const EmployeeList = () => {
                             <input type="text" name="phone_number" value={formData.phone_number} onChange={handleChange} />
                             <label>Address:</label>
                             <input type="text" name="address" value={formData.address} onChange={handleChange} />
+                            <label>Bio:</label>
+                            <input type="text" name="bio" value={formData.bio} onChange={handleChange} />
                             <button type="submit">Update</button>
                         </form>
                     </div>

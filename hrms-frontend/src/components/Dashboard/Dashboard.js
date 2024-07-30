@@ -52,19 +52,18 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="dashboard-container">
-            <h1>Dashboard</h1>
+        <div className="dashboard-container">   
             {error && <p className="error-message">{error}</p>}
 
             {/* Birthday Section */}
             <section className="dashboard-section">
-                <h2>Birthday List</h2>
+                <h2>Upcoming Birthday</h2>
                 {currentBirthday.length > 0 ? (
                     <div className="card">
                         {currentBirthday.map(birthday => (
                             <div key={birthday.id} className="birthday-card">
                                 <h3>{birthday.first_name} {birthday.last_name}</h3>
-                                <p>Date of Birth: {new Date(birthday.dob).toLocaleDateString('en-US', { day: '2-digit', month: 'long' })}</p>
+                                <p>{new Date(birthday.dob).toLocaleDateString('en-US', { day: '2-digit', month: 'long' })}</p>
                             </div>
                         ))}
                         <div className="pagination">
@@ -91,7 +90,7 @@ const Dashboard = () => {
 
             {/* Holiday Section */}
             <section className="dashboard-section">
-                <h2>Holiday List</h2>
+                <h2>Holidays</h2>
                 {currentHoliday.length > 0 ? (
                     <div className="card">
                         {currentHoliday.map(holiday => (

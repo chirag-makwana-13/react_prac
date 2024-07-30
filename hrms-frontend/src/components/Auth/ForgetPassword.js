@@ -21,7 +21,7 @@ const ForgetPassword = () => {
             setMessage(response.data.message);
             setTimeout(() => {
                 navigate('/login');
-            }, 2000); // Redirect after 2 seconds
+            }, 1000);
         } catch (error) {
             setError(error.response.data.message);
         }

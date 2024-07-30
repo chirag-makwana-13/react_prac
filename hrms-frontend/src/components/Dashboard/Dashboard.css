@@ -1,6 +1,6 @@
 .dashboard-container {
   padding: 20px;
-  margin-top: -190px;
+  margin-top: -121px;
   margin-left: 30px;
 }
 
@@ -20,6 +20,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   width: 250px;
+  border-left: 6px solid #002F4B;
 }
 
 .birthday-card, .holiday-card {
@@ -39,7 +40,7 @@
 
 .holiday-card h1 {
   font-size: 28px;
-  color: #007bff;
+  color: #00629b;
 }
 
 .holiday-card p {
@@ -57,16 +58,16 @@
 
 .pagination-button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #002F4B;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .pagination-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(3, 112, 228);
 }
 
 .pagination-button:disabled {

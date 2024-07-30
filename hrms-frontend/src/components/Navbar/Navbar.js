@@ -18,9 +18,6 @@ const Navbar = ({ handleLogout }) => {
                 <div className="nav-header">HRMS</div>
                 <ul className="nav-links">
                     <li>
-                        <Link to="/" className={activeLink === '' ? 'active' : ''}>Home</Link>
-                    </li>
-                    <li>
                         <Link to="/dashboard" className={activeLink === 'dashboard' ? 'active' : ''}>Dashboard</Link>
                     </li>
                     <li>

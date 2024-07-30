@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
 
@@ -106,6 +106,9 @@ const Register = () => {
                     {errors.dob && <p className="error">{errors.dob}</p>}
                 </div>
                 <button type="submit" className="register-button">Register</button>
+                <p className='p'>
+                        <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>
+                </p>
             </form>
         </div>
     );
