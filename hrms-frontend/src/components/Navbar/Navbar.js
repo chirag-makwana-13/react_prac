@@ -32,6 +32,9 @@ const Navbar = ({ handleLogout }) => {
                     <li>
                         <Link to="/companypolicy" className={activeLink === 'companypolicy' ? 'active' : ''}>Companypolicy</Link>
                     </li>
+                    <li>
+                        <Link to="/changepassword" className={activeLink === 'changepassword' ? 'active' : ''}>Change Password</Link>
+                    </li>
                 </ul>
                 <button onClick={handleLogout} className="logout-button">Logout</button>
             </nav>

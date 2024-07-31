@@ -86,9 +86,9 @@ const Register = () => {
                     {errors.department && <p className="error">{errors.department}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Date of Joining:</label>
-                    <input type="date" name="date_of_joining" value={userData.date_of_joining} onChange={handleChange} />
-                    {errors.date_of_joining && <p className="error">{errors.date_of_joining}</p>}
+                    <label>Date of Birth:</label>
+                    <input type="date" name="dob" value={userData.dob} onChange={handleChange} />
+                    {errors.dob && <p className="error">{errors.dob}</p>}
                 </div>
                 <div className="form-group">
                     <label>Phone Number:</label>
@@ -101,9 +101,9 @@ const Register = () => {
                     {errors.address && <p className="error">{errors.address}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Date of Birth:</label>
-                    <input type="date" name="dob" value={userData.dob} onChange={handleChange} />
-                    {errors.dob && <p className="error">{errors.dob}</p>}
+                    <label>Date of Joining:</label>
+                    <input type="date" name="date_of_joining" value={userData.date_of_joining} onChange={handleChange} />
+                    {errors.date_of_joining && <p className="error">{errors.date_of_joining}</p>}
                 </div>
                 <button type="submit" className="register-button">Register</button>
                 <p className='p'>

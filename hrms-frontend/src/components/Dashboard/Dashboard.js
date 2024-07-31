@@ -41,7 +41,7 @@ const Dashboard = () => {
 
             // Update button states based on the action performed
             if (action === 'checkin') {
-                setButtonsState({ checkIn: true, breakIn: false, breakOut: true, checkOut: true });
+                setButtonsState({ checkIn: true, breakIn: false, breakOut: true, checkOut: false });
             } else if (action === 'breakin') {
                 setButtonsState({ checkIn: true, breakIn: true, breakOut: false, checkOut: true });
             } else if (action === 'breakout') {
@@ -79,6 +79,39 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-container">
+                        <div className="lower-dashboard">
+                {error && <p className="error-message">{error}</p>}
+                <div className="actions">
+                    <button 
+                        onClick={() => handleAction('checkin')} 
+                        disabled={buttonsState.checkIn} 
+                        className={buttonsState.checkIn ? 'disabled' : ''}
+                    >
+                        Check In
+                    </button>
+                    <button 
+                        onClick={() => handleAction('breakin')} 
+                        disabled={buttonsState.breakIn} 
+                        className={buttonsState.breakIn ? 'disabled' : ''}
+                    >
+                        Break In
+                    </button>
+                    <button 
+                        onClick={() => handleAction('breakout')} 
+                        disabled={buttonsState.breakOut} 
+                        className={buttonsState.breakOut ? 'disabled' : ''}
+                    >
+                        Break Out
+                    </button>
+                    <button 
+                        onClick={() => handleAction('checkout')} 
+                        disabled={buttonsState.checkOut} 
+                        className={buttonsState.checkOut ? 'disabled' : ''}
+                    >
+                        Check Out
+                    </button>
+                </div>
+            </div>
             <div className="upper-dashboard">
                 <section className="dashboard-section">
                     <h2>Upcoming Birthday</h2>
@@ -143,40 +176,6 @@ const Dashboard = () => {
                         <p>No upcoming holidays.</p>
                     )}
                 </section>
-            </div>
-
-            <div className="lower-dashboard">
-                {error && <p className="error-message">{error}</p>}
-                <div className="actions">
-                    <button 
-                        onClick={() => handleAction('checkin')} 
-                        disabled={buttonsState.checkIn} 
-                        className={buttonsState.checkIn ? 'disabled' : ''}
-                    >
-                        Check In
-                    </button>
-                    <button 
-                        onClick={() => handleAction('breakin')} 
-                        disabled={buttonsState.breakIn} 
-                        className={buttonsState.breakIn ? 'disabled' : ''}
-                    >
-                        Break In
-                    </button>
-                    <button 
-                        onClick={() => handleAction('breakout')} 
-                        disabled={buttonsState.breakOut} 
-                        className={buttonsState.breakOut ? 'disabled' : ''}
-                    >
-                        Break Out
-                    </button>
-                    <button 
-                        onClick={() => handleAction('checkout')} 
-                        disabled={buttonsState.checkOut} 
-                        className={buttonsState.checkOut ? 'disabled' : ''}
-                    >
-                        Check Out
-                    </button>
-                </div>
             </div>
         </div>
     );
