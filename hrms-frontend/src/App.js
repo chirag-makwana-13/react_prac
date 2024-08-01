@@ -11,6 +11,7 @@ import Navbar from './components/Navbar/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import ChangePassword from './components/Auth/ChangePassword';
 import AttedanceReport from './components/AttendanceReport/AttedanceReport';
+import Leaves from './components/Leaves/Leaves';
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,6 +55,14 @@ const App = () => {
                         element={
                             <ProtectedRoute>
                                 <AttedanceReport />
+                            </ProtectedRoute>
+                        } 
+                    />
+                    <Route 
+                        path="/leaves"
+                        element={
+                            <ProtectedRoute>
+                                <Leaves />
                             </ProtectedRoute>
                         } 
                     />
