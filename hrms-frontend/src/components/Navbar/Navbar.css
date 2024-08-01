@@ -95,10 +95,9 @@ body {
 }
 
 .content {
-  margin-left: 200px;
   padding: 20px;
   width: calc(100% - 200px);
-  margin-top: -93px;
+  margin-top: -350px;
 }
 
 .content.authenticated {

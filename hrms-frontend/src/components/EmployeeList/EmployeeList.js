@@ -9,6 +9,7 @@ const EmployeeList = () => {
     const [editingEmployee, setEditingEmployee] = useState(null);
     const [deletingEmployee, setDeletingEmployee] = useState(null);
     const [message, setMessage] = useState('');
+    const [searchEmployee, setSearchemployee] = useState("");
     const [formData, setFormData] = useState({
         username: '',
         first_name: '',
@@ -28,7 +29,11 @@ const EmployeeList = () => {
                 const userResponse = await axios.get('/auth/user/');
                 setIsAdmin(userResponse.data.is_staff);
 
-                const employeesResponse = await axios.get('/employees/');
+                const employeesResponse = await axios.get('/employees/', {
+                    params: {
+                      search: searchEmployee,
+                    },
+                  });
                 setEmployees(employeesResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -37,7 +42,7 @@ const EmployeeList = () => {
         };
 
         fetchData();
-    }, []);
+    }, [searchEmployee]);
 
     const handleDelete = async (id) => {
         try {
@@ -87,6 +92,11 @@ const EmployeeList = () => {
     return (
         <div className="employee-list-container">
             <h1>Employee List</h1>
+            Search:{" "}
+            <input
+            placeholder="Search"
+            onChange={(event) => setSearchemployee(event.target.value)}
+            />
             {error && <p className="error-message">{error}</p>}
             {message && <p className="message">{message}</p>}
             {employees.length > 0 ? (

@@ -1,8 +1,7 @@
 /* General container styling */
 .employee-list-container {
   padding: 20px;
-  margin-bottom: -417px;
-  background-color: #f4f4f4;
+  margin-top: 0px;
   min-height: 100vh;
   box-sizing: border-box;
 }

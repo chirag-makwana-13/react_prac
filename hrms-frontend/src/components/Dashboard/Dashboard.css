@@ -1,7 +1,9 @@
 .dashboard-container {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 20px;
+    margin-top: -200px;
+    gap: 680px;
 }
 
 .upper-dashboard, .lower-dashboard {
@@ -23,8 +25,12 @@
     gap: 20px;
 }
 
-.dashboard-section {
+/* .dashboard-section {
     margin-bottom: 20px;
+} */
+
+.p{
+    font-size: 15px;
 }
 
 .card {
@@ -32,6 +38,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     background-color: #fff;
+    width: 250px;
 }
 
 .pagination {
@@ -46,7 +53,7 @@
     border: none;
     color: white;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
@@ -56,11 +63,34 @@
     transform: scale(1.1);
 }
 
-.birthday-card, .holiday-card {
+.birthday-card, .holiday-card, .login-card {
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todaylog-card{
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 370px;
+    background-color: #fff7f0;
+}
+
+.todaycard {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background-color: #fff;
+    width: 400px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.todaylogs-section{
+    margin-left: 430px;
 }
 
 .birthday-card {
@@ -69,6 +99,10 @@
 
 .holiday-card {
     background-color: #fefbd8;
+}
+
+.login-card{
+    background-color: aliceblue;
 }
 
 .actions button {

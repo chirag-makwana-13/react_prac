@@ -14,7 +14,7 @@ body {
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 400px;
 }
 
 .register-form {
@@ -88,4 +88,5 @@ p{
 
 .p:hover{
   font-weight: bold;
+  cursor: pointer;
 }

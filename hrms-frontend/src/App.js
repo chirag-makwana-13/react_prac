@@ -10,6 +10,7 @@ import EmployeeList from './components/EmployeeList/EmployeeList';
 import Navbar from './components/Navbar/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import ChangePassword from './components/Auth/ChangePassword';
+import AttedanceReport from './components/AttendanceReport/AttedanceReport';
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,6 +46,14 @@ const App = () => {
                         element={
                             <ProtectedRoute>
                                 <Dashboard />
+                            </ProtectedRoute>
+                        } 
+                    />
+                    <Route 
+                        path="/attendance"
+                        element={
+                            <ProtectedRoute>
+                                <AttedanceReport />
                             </ProtectedRoute>
                         } 
                     />
