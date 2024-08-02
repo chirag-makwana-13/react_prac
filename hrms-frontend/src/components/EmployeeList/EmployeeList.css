@@ -1,14 +1,14 @@
 /* General container styling */
 .employee-list-container {
   padding: 20px;
-  margin-top: 0px;
-  min-height: 100vh;
-  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  margin-top: -50px;
+  height: 100vh
 }
 
 /* Table styling */
 .employee-table {
-  width: 100%;
+  width: 98%;
   border-collapse: collapse;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
 }
 
 .employee-table th {
-  background-color: #007bff;
+  background-color: #002f4b;
   color: white;
 }
 
@@ -36,7 +36,7 @@
 }
 
 /* Button styling */
-.employee-table button {
+.employee-table button, .yes-button,  .cancle-button {
   margin-right: 5px;
   padding: 5px 10px;
   border: none;
@@ -45,16 +45,16 @@
   transition: background-color 0.3s ease;
 }
 
-.employee-table button:hover {
+.employee-table button,.cancle-button,.yes-button:hover {
   background-color: #0056b3;
 }
 
-.employee-table .edit-button {
+.employee-table .edit-button, .yes-button {
   background-color: #4caf50;
   color: white;
 }
 
-.employee-table .delete-button {
+.employee-table .delete-button, .cancle-button {
   background-color: #f44336;
   color: white;
 }
@@ -133,4 +133,11 @@
 .message {
   color: green;
   margin: 10px 0;
+}
+
+.search{
+  border-radius: 8px;
+  padding: 8px;
+  border-color: #92c0f5;
+  width: 300px;
 }

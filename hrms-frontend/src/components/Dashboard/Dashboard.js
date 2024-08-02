@@ -164,6 +164,23 @@ const Dashboard = () => {
     });
   };
 
+  const handlefecth = () => {
+    axios
+      .get("/todayEmployeeActivity/", {
+        params: {
+          search: searchTodaylogs,
+        },
+      })
+      .then((response) => {
+        setTodaylogs(response.data);
+      })
+      .catch((error) => {
+        console.error("cannot fetch data", error);
+      });
+  };
+
+  // useEffect(() => {}, [searchTodaylogs]);
+
   return (
     <div>
       <div className="dashboard-container">
@@ -294,58 +311,69 @@ const Dashboard = () => {
 
           <section className="logs-section">
             <h2>Logs</h2>
-            {logs.length > 0 ? (
-              <div className="card">
-                {logs.map((log, index) => (
-                  <div key={index} className="login-card">
-                    <p className="p">
-                      <strong>Check In:</strong> {formatTime1(log.checkIn)}
-                    </p>
-                    {log.breaks.length > 0 &&
-                      log.breaks.map((breakItem, index) => (
-                        <div key={index}>
-                          <p className="p">
-                            <strong>Break In:</strong>{" "}
-                            {formatTime1(breakItem.breakIn)}
-                          </p>
-                          <p className="p">
-                            <strong>Break Out:</strong>{" "}
-                            {formatTime1(breakItem.breakOut)}
-                          </p>
-                        </div>
-                      ))}
-                    <p className="p">
-                      <strong>Check Out:</strong> {formatTime1(log.checkOut)}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No logs available.</p>
-            )}
+            <div className="card">
+              {logs.length > 0 ? (
+                <>
+                  {logs.map((log, index) => (
+                    <div key={index} className="login-card">
+                      <p className="p">
+                        <strong>Check In:</strong> {formatTime1(log.checkIn)}
+                      </p>
+                      {log.breaks.length > 0 &&
+                        log.breaks.map((breakItem, index) => (
+                          <div key={index}>
+                            <p className="p">
+                              <strong>Break In:</strong>{" "}
+                              {formatTime1(breakItem.breakIn)}
+                            </p>
+                            <p className="p">
+                              <strong>Break Out:</strong>{" "}
+                              {formatTime1(breakItem.breakOut)}
+                            </p>
+                          </div>
+                        ))}
+                      <p className="p">
+                        <strong>Check Out:</strong> {formatTime1(log.checkOut)}
+                      </p>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <h4>No logs available.</h4>
+              )}
+            </div>
           </section>
         </div>
       </div>
       <section className="todaylogs-section">
         <h2>Todays All Logs</h2>
-        Search:{" "}
         <input
-          placeholder="Search"
+          placeholder="Search Here"
           onChange={(event) => setSearchtodaylogs(event.target.value)}
+          className="search"
         />
-        {todaylogs.length > 0 ? (
-          <div className="todaycard">
-            {todaylogs.map((todaylog, index) => (
-              <div key={index} className="todaylog-card">
-                <p className="p">{`${todaylog.first_name} ${
-                  todaylog.last_name
-                } ${todaylog.status} ${formatTime1(todaylog.status_time)}`}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No logs available.</p>
-        )}
+        <button className="refresh" onClick={handlefecth}>
+          Refresh
+        </button>
+        <br />
+        <br />
+        <div className="todaycard">
+          {todaylogs.length > 0 ? (
+            <>
+              {todaylogs.map((todaylog, index) => (
+                <div key={index} className="todaylog-card">
+                  <p className="p">{`${todaylog.first_name} ${
+                    todaylog.last_name
+                  } ${todaylog.status} ${formatTime1(
+                    todaylog.status_time
+                  )}`}</p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <h4>No logs available.</h4>
+          )}
+        </div>
       </section>
     </div>
   );

@@ -2,16 +2,48 @@
 .leaves-container {
   padding: 20px;
   font-family: Arial, sans-serif;
-  margin-top: 200px;
+  margin-top: -50px;
+  height: 100vh;
 }
 
 /* Style for leave details section */
-.leave-details {
-  background-color: #f4f4f4;
+.lcard {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  background-color: #fff;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slcard, .plcard, .tlcard, .ulcard, .clcard {
+  margin-bottom: 15px;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+}
+
+.clcard {
+  background-color: #fefbd8;
+}
+
+.slcard {
+  background-color: #f0f8ff;
+}
+
+.plcard {
+  background-color: #fefbd8;
+}
+
+.ulcard {
+  background-color: #f0f8ff;
+}
+
+.tlcard {
+  background-color: #d9fed8;
 }
 
 /* Style for the leave form and modal */
@@ -19,8 +51,8 @@
   margin-bottom: 20px;
 }
 
-.add-leave-button {
-  background-color: #4CAF50;
+.add-leave-button, .remove-leave-button {
+
   color: white;
   border: none;
   padding: 10px 20px;
@@ -30,6 +62,20 @@
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-leave-button{
+  background-color: #4CAF50;
+}
+
+.remove-leave-button{
+  background-color: #b43838;
+  margin-left: 10px;
+}
+
+.remove-leave-button:hover{
+  background-color: #a04545;
 }
 
 .add-leave-button:hover {
@@ -70,21 +116,6 @@
   font-size: 14px;
 }
 
-/* Style for the leave list and leave card */
-.leave-list {
-  margin-top: 20px;
-}
-
-/* Continued style for leave card */
-.leave-card {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .leave-card.admin {
   display: flex;
   justify-content: space-between;
@@ -113,3 +144,38 @@
   margin-top: 20px;
 }
 
+
+/* Table styling */
+.leave-table {
+  width: 90%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.leave-table th, .leave-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.leave-table th {
+  background-color: #002f4b;
+  color: white;
+}
+
+.leave-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.leave-table tr:hover {
+  background-color: #ddd;
+}
+
+/* Error and message styling */
+.error-message {
+  color: red;
+  margin: 10px 0;
+}

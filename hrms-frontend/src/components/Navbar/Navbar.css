@@ -61,8 +61,9 @@ body {
 }
 
 .nav-links a.active {
-  background-color: #007bff;
+  background-color: white;
   border-radius: 5px;
+  color: #002F4B;
 }
 
 .logout-button {
@@ -92,12 +93,13 @@ body {
   box-shadow: 0 2px 5px #00000029,0 2px 10px #0000001f;
   z-index: 900;
   margin-left: 40px;
+  display:"flex";
 }
 
 .content {
   padding: 20px;
   width: calc(100% - 200px);
-  margin-top: -350px;
+  margin-top: -370px;
 }
 
 .content.authenticated {

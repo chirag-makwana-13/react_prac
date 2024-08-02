@@ -86,6 +86,7 @@
     background-color: #fff;
     width: 400px;
     max-height: 500px;
+    height: 500px;
     overflow-y: scroll;
 }
 
@@ -105,7 +106,7 @@
     background-color: aliceblue;
 }
 
-.actions button {
+.actions button, .refresh  {
     border-radius: 5px;
     color: #fff;
     padding: 10px 20px;
@@ -115,7 +116,7 @@
     margin: 5px;
 }
 
-.actions button.checkin {
+.actions button.checkin,.refresh {
     background-color: #28a745; /* Green */
 }
 

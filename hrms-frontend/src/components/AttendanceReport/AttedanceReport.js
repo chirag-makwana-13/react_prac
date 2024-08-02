@@ -18,7 +18,7 @@ const AttedanceReport = () => {
           },
         });
         setAttedancereport(attendancereportResponse.data.results);
-        setTotalPage(Math.ceil(attendancereportResponse.data.count/ 10));
+        setTotalPage(Math.ceil(attendancereportResponse.data.count / 10));
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load data. Please try again later.");
@@ -48,18 +48,18 @@ const AttedanceReport = () => {
     <div className="attendance-list-container">
       <h1>Attendace-Report List</h1>
       {error && <p className="error-message">{error}</p>}
-      {attendancereport.length > 0 ? (
-        <table className="attendance-table">
-          <thead>
-            <tr>
-              <th>Sr No</th>
-              <th>Date</th>
-              <th>Entry Time</th>
-              <th>Exit Time</th>
-              <th>Break Time</th>
-              <th>Working Hours</th>
-            </tr>
-          </thead>
+      <table className="attendance-table">
+        <thead>
+          <tr>
+            <th>Sr No</th>
+            <th>Date</th>
+            <th>Entry Time</th>
+            <th>Exit Time</th>
+            <th>Break Time</th>
+            <th>Working Hours</th>
+          </tr>
+        </thead>
+        {attendancereport.length > 0 ? (
           <tbody>
             {attendancereport.map((attendance, index) => (
               <tr key={attendance.id}>
@@ -72,10 +72,16 @@ const AttedanceReport = () => {
               </tr>
             ))}
           </tbody>
-        </table>
-      ) : (
-        <p>No Attendance Report found.</p>
-      )}
+        ) : (
+          <tbody>
+            <tr>
+              <td colSpan="12">
+                <h4>No Attendance Report found.</h4>
+              </td>
+            </tr>
+          </tbody>
+        )}
+      </table>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPage}

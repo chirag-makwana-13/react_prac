@@ -16,8 +16,10 @@ const Login = ({ onLogin }) => {
                 username,
                 password,
             });
+            console.log(response,"rrrrrrrrrrrrrrrrrrrrr");
             localStorage.setItem('access', response.data.access);
             localStorage.setItem('refresh', response.data.refresh);
+            localStorage.setItem('username', response.data.username)
             onLogin();
             navigate('/dashboard');
         } catch (error) {

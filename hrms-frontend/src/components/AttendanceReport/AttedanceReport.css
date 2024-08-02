@@ -1,14 +1,14 @@
 /* General container styling */
 .attendance-list-container {
   padding: 20px;
-  margin-top: 0px;
-  min-height: 100vh;
-  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  margin-top: -50px;
+  height: 100vh
 }
 
 /* Table styling */
 .attendance-table {
-  width: 100%;
+  width: 98%;
   border-collapse: collapse;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
 }
 
 .attendance-table th {
-  background-color: #007bff;
+  background-color: #002f4b;
   color: white;
 }
 
