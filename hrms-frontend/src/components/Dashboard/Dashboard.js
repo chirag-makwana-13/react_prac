@@ -12,6 +12,14 @@ const Dashboard = () => {
   const [itemsPerPage] = useState(1);
   const [searchTodaylogs, setSearchtodaylogs] = useState("");
   const [error, setError] = useState("");
+  const [attendancereport, setAttedancereport] = useState([]);
+  const [dataReport, setDataReport] = useState({
+    total_present_days: "",
+    total_office_hours: "",
+    total_working_hours: "",
+    total_late_days: "",
+    total_half_days: "",
+  });
   const [buttonsState, setButtonsState] = useState({
     checkIn: false,
     breakIn: true,
@@ -26,11 +34,13 @@ const Dashboard = () => {
           birthdaysResponse,
           holidaysResponse,
           logsResponse,
+          attendancereportResponse,
           todaylogsResponse,
         ] = await Promise.all([
           axios.get("/birthdays/"),
           axios.get("/holidays/"),
           axios.get("/employeeDailyLogs/"),
+          axios.get("/attendanceReport/"),
           axios.get("/todayEmployeeActivity/", {
             params: {
               search: searchTodaylogs,
@@ -41,6 +51,15 @@ const Dashboard = () => {
         setBirthdays(birthdaysResponse.data);
         setHolidays(holidaysResponse.data);
         setLogs(logsResponse.data);
+        setAttedancereport(attendancereportResponse.data.results);
+        const dataAdd = attendancereportResponse.data.results[0];
+        setDataReport({
+          total_present_days: dataAdd.total_present_days,
+          total_office_hours: dataAdd.total_office_hours,
+          total_working_hours: dataAdd.total_working_hours,
+          total_late_days: dataAdd.total_late_days,
+          total_half_days: dataAdd.total_half_days,
+        });
         setTodaylogs(todaylogsResponse.data);
         updateButtonState(logsResponse.data);
       } catch (error) {
@@ -164,6 +183,16 @@ const Dashboard = () => {
     });
   };
 
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
+    return hDisplay + mDisplay; 
+}
+
   const handlefecth = () => {
     axios
       .get("/todayEmployeeActivity/", {
@@ -194,7 +223,7 @@ const Dashboard = () => {
                     <h3>
                       {birthday.first_name} {birthday.last_name}
                     </h3>
-                    <p>
+                    <p style={{fontSize:"17px"}}>
                       {new Date(birthday.dob).toLocaleDateString("en-US", {
                         day: "2-digit",
                         month: "long",
@@ -234,7 +263,7 @@ const Dashboard = () => {
                 {currentHoliday.map((holiday) => (
                   <div key={holiday.id} className="holiday-card">
                     <h1>{holiday.name}</h1>
-                    <p>
+                    <p style={{fontSize:"17px"}}>
                       {new Date(holiday.date).toLocaleDateString("en-US", {
                         day: "2-digit",
                         month: "long",
@@ -267,9 +296,24 @@ const Dashboard = () => {
             )}
           </section>
         </div>
+        <section className="middle">
+          <h1>Record Your Attendance</h1>
+          <div className="card">
+            <div className="attendance">
+              <div className="attendance-card">
+                <p className="p"><strong>Days: </strong>{dataReport.total_present_days}</p>
+                <p className="p"><strong>Late: </strong>{dataReport.total_late_days}</p>
+                <p className="p"><strong>Half Days: </strong>{dataReport.total_half_days}</p>
+                <p className="p"><strong>Total Office: </strong>{dataReport.total_office_hours}</p>
+                <p className="p"><strong>Total worked: </strong>{secondsToHms(dataReport.total_working_hours)}</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div className="lower-container">
           {error && <p className="error-message">{error}</p>}
+          <h2>Today's Action</h2>
           <div className="actions">
             <button
               onClick={() => handleAction("checkin")}

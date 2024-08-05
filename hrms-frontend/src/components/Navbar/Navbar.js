@@ -52,10 +52,10 @@ const Navbar = ({ handleLogout }) => {
           </li>
           <li>
             <Link
-              to="/companypolicy"
-              className={activeLink === "companypolicy" ? "active" : ""}
+              to="/calendar"
+              className={activeLink === "calendar" ? "active" : ""}
             >
-              Companypolicy
+              Calendar
             </Link>
           </li>
           <li>

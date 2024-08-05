@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ChangePassword from './components/Auth/ChangePassword';
 import AttedanceReport from './components/AttendanceReport/AttedanceReport';
 import Leaves from './components/Leaves/Leaves';
+import MyCalendar from './components/Calender/Calender';
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -74,6 +75,15 @@ const App = () => {
                             </ProtectedRoute>
                         } 
                     />
+                    <Route 
+                        path="/calendar" 
+                        element={
+                            <ProtectedRoute>
+                                <MyCalendar />
+                            </ProtectedRoute>
+                        } 
+                    />
+                    
                     <Route 
                         path="/changepassword" 
                         element={

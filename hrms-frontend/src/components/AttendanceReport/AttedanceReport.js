@@ -5,6 +5,13 @@ import Pagination from "../Pagination";
 
 const AttedanceReport = () => {
   const [attendancereport, setAttedancereport] = useState([]);
+  const [dataReport, setDataReport] = useState({
+    total_present_days: "",
+    total_office_hours: "",
+    total_working_hours: "",
+    total_late_days: "",
+    total_half_days: "",
+  });
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -18,6 +25,14 @@ const AttedanceReport = () => {
           },
         });
         setAttedancereport(attendancereportResponse.data.results);
+        const dataAdd = attendancereportResponse.data.results[0];
+        setDataReport({
+          total_present_days: dataAdd.total_present_days,
+          total_office_hours: dataAdd.total_office_hours,
+          total_working_hours: dataAdd.total_working_hours,
+          total_late_days: dataAdd.total_late_days,
+          total_half_days: dataAdd.total_half_days,
+        });
         setTotalPage(Math.ceil(attendancereportResponse.data.count / 10));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -44,9 +59,26 @@ const AttedanceReport = () => {
     setCurrentPage(page);
   };
 
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
+    return hDisplay + mDisplay; 
+}
+
   return (
     <div className="attendance-list-container">
       <h1>Attendace-Report List</h1>
+      <div className="lcard">
+        <p className="ulcard p"><strong>Days: </strong><br/><br/>{dataReport.total_present_days}</p>
+        <p className="plcard p"><strong>Late: </strong><br/><br/>{dataReport.total_late_days}</p>
+        <p className="ulcard p"><strong>Half Days: </strong><br/><br/>{dataReport.total_half_days}</p>
+        <p className="plcard p"><strong>Total Office: </strong><br/><br/>{dataReport.total_office_hours}</p>
+        <p className="ulcard p"><strong>Total worked: </strong><br/><br/>{secondsToHms(dataReport.total_working_hours)}</p>
+      </div><br/>
       {error && <p className="error-message">{error}</p>}
       <table className="attendance-table">
         <thead>

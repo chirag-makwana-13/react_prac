@@ -1,9 +1,9 @@
 .dashboard-container {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: space-between;
     padding: 20px;
     margin-top: -200px;
-    gap: 680px;
+    width: 95%;
 }
 
 .upper-dashboard, .lower-dashboard {
@@ -25,12 +25,28 @@
     gap: 20px;
 }
 
+.middle {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* .dashboard-section {
     margin-bottom: 20px;
 } */
 
 .p{
-    font-size: 15px;
+    font-size: 18px;
+}
+
+.attendance{
+  padding-left: 0;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+strong{
+    color: #002f4b;
 }
 
 .card {
@@ -63,7 +79,7 @@
     transform: scale(1.1);
 }
 
-.birthday-card, .holiday-card, .login-card {
+.birthday-card, .holiday-card, .login-card , .attendance-card{
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 10px;
@@ -104,6 +120,10 @@
 
 .login-card{
     background-color: aliceblue;
+}
+
+.attendance-card{
+    background-color: rgb(255, 240, 242);
 }
 
 .actions button, .refresh  {
