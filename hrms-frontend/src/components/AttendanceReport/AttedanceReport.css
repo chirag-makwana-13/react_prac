@@ -40,3 +40,33 @@
   color: red;
   margin: 10px 0;
 }
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.filter-container select,
+.filter-container input {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.custom-date-range {
+  display: flex;
+  align-items: center;
+}
+
+.custom-date-range label {
+  margin-right: 5px;
+  font-weight: bold;
+}

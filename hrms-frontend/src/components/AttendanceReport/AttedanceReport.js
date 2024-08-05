@@ -15,15 +15,24 @@ const AttedanceReport = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [filterType, setFilterType] = useState("thisMonth");
+  const [customStartDate, setCustomStartDate] = useState("");
+  const [customEndDate, setCustomEndDate] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const attendancereportResponse = await axios.get("/attendanceReport/", {
-          params: {
-            page: currentPage,
-          },
-        });
+        const params = {
+          page: currentPage,
+          filterType: filterType,
+        };
+
+        if (filterType === "custom") {
+          params.start_date = customStartDate;
+          params.end_date = customEndDate;
+        }
+
+        const attendancereportResponse = await axios.get("/attendanceReport/", { params });
         setAttedancereport(attendancereportResponse.data.results);
         const dataAdd = attendancereportResponse.data.results[0];
         setDataReport({
@@ -41,12 +50,11 @@ const AttedanceReport = () => {
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, filterType, customStartDate, customEndDate]);
 
   const formatTime1 = (datetime) => {
     if (!datetime) return "-";
     const date = new Date(datetime);
-    // Check if the date is valid
     if (isNaN(date.getTime())) return "Invalid Date";
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -57,6 +65,18 @@ const AttedanceReport = () => {
 
   const handlePageChage = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterType(e.target.value);
+  };
+
+  const handleCustomStartDateChange = (e) => {
+    setCustomStartDate(e.target.value);
+  };
+
+  const handleCustomEndDateChange = (e) => {
+    setCustomEndDate(e.target.value);
   };
 
   function secondsToHms(d) {
@@ -79,6 +99,26 @@ const AttedanceReport = () => {
         <p className="plcard p"><strong>Total Office: </strong><br/><br/>{dataReport.total_office_hours}</p>
         <p className="ulcard p"><strong>Total worked: </strong><br/><br/>{secondsToHms(dataReport.total_working_hours)}</p>
       </div><br/>
+
+      <div className="filter-container">
+        <label htmlFor="filterType">Filter By:</label>
+        <select id="filterType" value={filterType} onChange={handleFilterChange}>
+          <option value="thisMonth">This Month</option>
+          <option value="lastMonth">Last Month</option>
+          <option value="custom">Custom Range</option>
+        </select>
+
+        {filterType === "custom" && (
+          <div className="custom-date-range">
+            <label htmlFor="customStartDate">Start Date:</label>
+            <input type="date" id="customStartDate" value={customStartDate} onChange={handleCustomStartDateChange} />
+
+            <label htmlFor="customEndDate">End Date:</label>
+            <input type="date" id="customEndDate" value={customEndDate} onChange={handleCustomEndDateChange} />
+          </div>
+        )}
+      </div>
+
       {error && <p className="error-message">{error}</p>}
       <table className="attendance-table">
         <thead>
