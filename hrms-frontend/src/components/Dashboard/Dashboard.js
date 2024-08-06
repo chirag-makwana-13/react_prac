@@ -151,7 +151,7 @@ const Dashboard = () => {
     indexOfFirstBirthday,
     indexOfLastBirthday
   );
-
+  const holidayimage = currentHoliday.holiday_image;
   const handleHolidayPagination = (direction) => {
     setCurrentHolidayPage((prevPage) => {
       const newPage = direction === "next" ? prevPage + 1 : prevPage - 1;
@@ -186,12 +186,12 @@ const Dashboard = () => {
   function secondsToHms(d) {
     d = Number(d);
     var h = Math.floor(d / 3600);
-    var m = Math.floor(d % 3600 / 60);
+    var m = Math.floor((d % 3600) / 60);
 
     var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
-    return hDisplay + mDisplay; 
-}
+    return hDisplay + mDisplay;
+  }
 
   const handlefecth = () => {
     axios
@@ -223,7 +223,7 @@ const Dashboard = () => {
                     <h3>
                       {birthday.first_name} {birthday.last_name}
                     </h3>
-                    <p style={{fontSize:"17px"}}>
+                    <p style={{ fontSize: "17px" }}>
                       {new Date(birthday.dob).toLocaleDateString("en-US", {
                         day: "2-digit",
                         month: "long",
@@ -261,9 +261,19 @@ const Dashboard = () => {
             {currentHoliday.length > 0 ? (
               <div className="card">
                 {currentHoliday.map((holiday) => (
-                  <div key={holiday.id} className="holiday-card">
+                  <div
+                    key={holiday.id}
+                    className="holiday-card"
+                    style={{
+                      backgroundImage: `url(${holiday.holiday_image})`,
+                      backgroundRepeat: "no-repeat",
+                      objectFit:"cover",
+                      backgroundSize: "300px 200px",
+                      color:"white"                   
+                    }}
+                  >
                     <h1>{holiday.name}</h1>
-                    <p style={{fontSize:"17px"}}>
+                    <p style={{ fontSize: "17px" }}>
                       {new Date(holiday.date).toLocaleDateString("en-US", {
                         day: "2-digit",
                         month: "long",
@@ -301,11 +311,26 @@ const Dashboard = () => {
           <div className="card">
             <div className="attendance">
               <div className="attendance-card">
-                <p className="p"><strong>Days: </strong>{dataReport.total_present_days}</p>
-                <p className="p"><strong>Late: </strong>{dataReport.total_late_days}</p>
-                <p className="p"><strong>Half Days: </strong>{dataReport.total_half_days}</p>
-                <p className="p"><strong>Total Office: </strong>{dataReport.total_office_hours}</p>
-                <p className="p"><strong>Total worked: </strong>{secondsToHms(dataReport.total_working_hours)}</p>
+                <p className="p">
+                  <strong>Days: </strong>
+                  {dataReport.total_present_days}
+                </p>
+                <p className="p">
+                  <strong>Late: </strong>
+                  {dataReport.total_late_days}
+                </p>
+                <p className="p">
+                  <strong>Half Days: </strong>
+                  {dataReport.total_half_days}
+                </p>
+                <p className="p">
+                  <strong>Total Office: </strong>
+                  {dataReport.total_office_hours}
+                </p>
+                <p className="p">
+                  <strong>Total worked: </strong>
+                  {secondsToHms(dataReport.total_working_hours)}
+                </p>
               </div>
             </div>
           </div>

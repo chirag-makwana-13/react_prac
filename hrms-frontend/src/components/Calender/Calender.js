@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import axios from "../../api";
-import './MyCalendar.css'; // Make sure to create and import this CSS file
+import './MyCalendar.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -78,7 +78,7 @@ const MyCalendar = () => {
           className={`calendar-button ${view === "birthdays" ? "active" : ""}`}
         >
           Birthday Calendar
-        </button>
+        </button>&emsp;&emsp;
         <button
           onClick={() => setView("leaves")}
           className={`calendar-button ${view === "leaves" ? "active" : ""}`}

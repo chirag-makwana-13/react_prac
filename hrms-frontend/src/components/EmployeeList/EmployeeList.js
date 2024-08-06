@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { debounce } from "lodash";
 import axios from "../../api";
@@ -23,20 +23,21 @@ const EmployeeList = () => {
     date_of_joining: "",
     phone_number: "",
     address: "",
+    profile: "",
   });
 
   const { register } = useForm();
 
   const handleSearch = useCallback(
-      debounce((searchEmployee) => {
-          setSearchemployee(searchEmployee);
-      }, 300),
-      [searchEmployee]
+    debounce((searchEmployee) => {
+      setSearchemployee(searchEmployee);
+    }, 300),
+    [searchEmployee]
   );
 
   const handleChangeSearch = (event) => {
-      const searchTerm = event.target.value;
-      handleSearch(searchTerm);
+    const searchTerm = event.target.value;
+    handleSearch(searchTerm);
   };
 
   useEffect(() => {
@@ -85,6 +86,7 @@ const EmployeeList = () => {
       date_of_joining: employee.date_of_joining,
       phone_number: employee.phone_number,
       address: employee.address,
+      profile: employee.profile,
     });
   };
 
@@ -116,15 +118,15 @@ const EmployeeList = () => {
         className="search"
       /> */}
       <form>
-            <input
-                type="text"
-                placeholder="Search..."
-                {...register("search", {
-                    onChange: (e) => handleChangeSearch(e),
-                })}
-                className="search"
-            />
-        </form>
+        <input
+          type="text"
+          placeholder="Search..."
+          {...register("search", {
+            onChange: (e) => handleChangeSearch(e),
+          })}
+          className="search"
+        />
+      </form>
       <br />
       {error && <p className="error-message">{error}</p>}
       {message && <p className="message">{message}</p>}
@@ -144,6 +146,7 @@ const EmployeeList = () => {
             <th>Phone Number</th>
             <th>Address</th>
             <th>Bio</th>
+            <th>Profile</th>
             {isAdmin && <th>Actions</th>}
           </tr>
         </thead>
@@ -164,6 +167,17 @@ const EmployeeList = () => {
                   <td>{employee.phone_number}</td>
                   <td>{employee.address}</td>
                   <td>{employee.bio}</td>
+                  <td>
+                    <img
+                      src={employee.profile}
+                      alt={employee.username}
+                      style={{
+                        height: "70px",
+                        width: "70px",
+                        borderRadius: "100%",
+                      }}
+                    />
+                  </td>
                   {isAdmin && (
                     <td>
                       <button
@@ -290,8 +304,18 @@ const EmployeeList = () => {
             </span>
             <h2>Confirm Delete</h2>
             <h4>Are you sure you want to delete this employee?</h4>
-            <button onClick={() => handleDelete(deletingEmployee)} className="yes-button">Yes</button>
-            <button onClick={() => setDeletingEmployee(null)} className="cancle-button">Cancel</button>
+            <button
+              onClick={() => handleDelete(deletingEmployee)}
+              className="yes-button"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setDeletingEmployee(null)}
+              className="cancle-button"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
