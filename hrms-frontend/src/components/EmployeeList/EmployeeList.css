@@ -6,170 +6,163 @@
   height: 100vh
 }
 
-/* Table styling */
-.employee-table {
-  width: 98%;
-  border-collapse: collapse;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
+
+/* Layout for the employee detail modal */
+.employee-detail-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.employee-table th, .employee-table td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+/* Left side details in the modal */
+.left-details,
+.middle-bio,
+.right-profile {
+  flex: 1;
+  min-width: 200px;
 }
 
-.employee-table th {
-  background-color: #002f4b;
-  color: white;
+/* Left side details in the modal */
+.left-details {
+  padding: 20px;
+  font-size: 16px;
 }
 
-.employee-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+/* Middle section for the bio in the modal */
+.middle-bio {
+  padding: 20px;
+  font-size: 16px;
+  text-align: center;
 }
 
-.employee-table tr:hover {
-  background-color: #ddd;
-}
-
-/* Button styling */
-.employee-table button, .yes-button,  .cancle-button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.employee-table button:hover {
-  background-color: #0056b3;
-}
-
-.employee-table .edit-button, .yes-button {
-  background-color: #4caf50;
-  color: white !important;
-}
-
-.employee-table .delete-button, .cancle-button {
-  background-color: #f44336;
-  color: white;
-}
-
-/* Modal styling */
-.modal {
+/* Right side profile image in the modal */
+.right-profile {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Style for the profile image */
+.right-profile img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+}
+
+/* Custom modal styles */
+.custom-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  max-width: 500px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 80%;
+  height: 80%;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom modal header styles */
+.custom-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  position: relative;
-  max-height: 700px;
-  overflow: scroll;
+  margin-bottom: 20px;
 }
 
-.modal-content h2 {
-  margin-top: 0;
+/* Title in the custom modal */
+.custom-modal-title {
+  flex: 1;
+  text-align: center;
 }
 
-.modal-content .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* Close button in the custom modal */
+.close {
   font-size: 24px;
   cursor: pointer;
 }
 
-.modal-content form label {
-  display: block;
-  margin: 10px 0 5px;
-}
-
-.modal-content form input, 
-.modal-content form select {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.modal-content form button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
+/* Button styles */
+.yes-button,
+.cancel-button {
+  background-color: green;
   color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.modal-content form button:hover {
-  background-color: #0056b3;
+/* Cancel button styles */
+.cancel-button {
+  background-color: red;
 }
 
-/* Error and message styling */
-.error-message {
-  color: red;
-  margin: 10px 0;
+/* Hover effect for buttons */
+.yes-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
 }
 
-.message {
-  color: green;
-  margin: 10px 0;
-}
-
-.search{
-  border-radius: 8px;
-  padding: 8px;
-  border-color: #92c0f5;
-  width: 300px;
-}
-
-.hotline{
+/* Container for employee cards */
+.employee-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 20px;
 }
 
-.hotline-card:hover{
-  box-shadow: 0 30px 50px -12px #002f4b1a;
-  transform: scale(1.02);
+/* Employee card styles */
+.employee-card {
+  width: 18rem;
+  margin-top: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-/* .employee-detail-container{
+/* Search input styles */
+.search {
+  width: 500px !important;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Modal content styles */
+.modal-content {
   display: flex;
-  justify-content: space-between;
-}
-
-.left-details{
-  flex: 1;
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
-.right-profile img{
-  border-radius: 15px;
-  max-width: 100%;
-  max-height: 300px;
-} */
+/* Input field styles */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
+/* Label styles */
+label {
+  font-weight: bold;
+}
+
+/* Employee detail styles */
+p {
+  margin: 5px 0;
+}

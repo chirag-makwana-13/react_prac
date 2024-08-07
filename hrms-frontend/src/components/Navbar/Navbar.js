@@ -1,4 +1,3 @@
-// src/components/Navbar/Navbar.js
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
@@ -7,7 +6,6 @@ import { useSelector } from "react-redux";
 const Navbar = ({ handleLogout }) => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
-  // const { user } = useSelector((state) => state.user);
   const { firstName } = useSelector((state) => state.firstName);
   const { lastName } = useSelector((state) => state.lastName);
   const { profile } = useSelector((state) => state.profile);
@@ -16,11 +14,6 @@ const Navbar = ({ handleLogout }) => {
     const path = location.pathname.split("/")[1];
     setActiveLink(path ? path : "home");
   }, [location]);
-
-  console.log(firstName);
-  // if (user) {
-  //   return navigate("/dashboard");
-  // }
 
   return (
     <div className="navbar-container">
@@ -80,29 +73,29 @@ const Navbar = ({ handleLogout }) => {
           Logout
         </button>
       </nav>
-      <div className="top-bar" style={{ display: "flex" }}>
+      <div className="top-bar" style={{ display: "flex", alignItems: "center" }}>
         <div>
           <h1>{activeLink.charAt(0).toUpperCase() + activeLink.slice(1)}</h1>
         </div>
-        <div style={{ marginLeft: "900px", display: "flex" }}>
+        <Link to="/profile" style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
           <img
             src={
               profile
                 ? `http://127.0.0.1:8000${profile}`
                 : "https://via.placeholder.com/50"
             }
-            alt="No image found"
+            alt="Profile"
             style={{
               height: "70px",
               width: "70px",
-              borderRadius: "100%",
+              borderRadius: "50%",
+              marginRight: "10px",
             }}
           />
-          &emsp;
           <h2>
             {firstName} {lastName}
           </h2>
-        </div>
+        </Link>
       </div>
     </div>
   );
