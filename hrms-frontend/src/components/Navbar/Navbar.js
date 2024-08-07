@@ -84,16 +84,21 @@ const Navbar = ({ handleLogout }) => {
         <div>
           <h1>{activeLink.charAt(0).toUpperCase() + activeLink.slice(1)}</h1>
         </div>
-        <div style={{ marginLeft: "900px", display:"flex" }}>
+        <div style={{ marginLeft: "900px", display: "flex" }}>
           <img
-            src={`http://127.0.0.1:8000${profile}`}
+            src={
+              profile
+                ? `http://127.0.0.1:8000${profile}`
+                : "https://via.placeholder.com/50"
+            }
             alt="No image found"
             style={{
               height: "70px",
               width: "70px",
               borderRadius: "100%",
             }}
-          />&emsp;
+          />
+          &emsp;
           <h2>
             {firstName} {lastName}
           </h2>

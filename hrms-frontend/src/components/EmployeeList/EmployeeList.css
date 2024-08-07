@@ -154,3 +154,22 @@
   box-shadow: 0 30px 50px -12px #002f4b1a;
   transform: scale(1.02);
 }
+
+/* .employee-detail-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-details{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-profile img{
+  border-radius: 15px;
+  max-width: 100%;
+  max-height: 300px;
+} */
+

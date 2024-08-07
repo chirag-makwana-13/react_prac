@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { debounce } from "lodash";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Modal } from "react-bootstrap";
 import axios from "../../api";
 import "./EmployeeList.css";
 
@@ -11,6 +11,7 @@ const EmployeeList = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [deletingEmployee, setDeletingEmployee] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [message, setMessage] = useState("");
   const [searchEmployee, setSearchemployee] = useState("");
   const [formData, setFormData] = useState({
@@ -113,11 +114,6 @@ const EmployeeList = () => {
   return (
     <div className="employee-list-container">
       <h1>Hotline</h1>
-      {/* <input
-        placeholder="Search Here"
-        onChange={(event) => setSearchemployee(event.target.value)}
-        className="search"
-      /> */}
       <form>
         <input
           type="text"
@@ -134,162 +130,195 @@ const EmployeeList = () => {
       <br />
       {employees.length > 0 ? (
         <>
-      <div className="hotline">
-        {employees.map((employee) => (
-          <Card
-            className="hotline-card"
-            style={{ width: "18rem", marginTop: "30px", cursor: "pointer" }}
-          >
-            <Card.Img
-              variant="top"
-              src={employee.profile}
-              alt={employee.username}
-              style={{ height: "300px", width: "290px", borderRadius: "15px" }}
-            />
-            <Card.Body>
-              <Card.Title>
-                <h2>{employee.department}</h2>
-              </Card.Title>
-              <Card.Text style={{ fontSize: "20px" }}>
-                {employee.first_name} {employee.last_name}
-              </Card.Text>
-            </Card.Body>
-            {isAdmin && (
-              <div>
-                <Button
-                  className="yes-button "
-                  onClick={() => handleEdit(employee)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  className="cancle-button"
-                  onClick={() => setDeletingEmployee(employee.id)}
-                >
-                  Delete
-                </Button>
+          <div className="hotline">
+            {employees.map((employee) => (
+              <Card
+                key={employee.id}
+                className="hotline-card"
+                style={{ width: "18rem", marginTop: "30px", cursor: "pointer" }}
+              >
+                <Card.Img
+                  variant="top"
+                  src={employee.profile ? employee.profile : "https://via.placeholder.com/200"}
+                  alt={employee.username}
+                  style={{ height: "300px", width: "290px", borderRadius: "15px" }}
+                  onClick={() => setSelectedEmployee(employee)}
+                />
+                <Card.Body>
+                  <Card.Title>
+                    <h2>{employee.department}</h2>
+                  </Card.Title>
+                  <Card.Text style={{ fontSize: "20px" }}>
+                    {employee.first_name} {employee.last_name}
+                  </Card.Text>
+                </Card.Body>
+                {isAdmin && (
+                  <div>
+                    <Button
+                      className="yes-button "
+                      onClick={() => handleEdit(employee)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="cancle-button"
+                      onClick={() => setDeletingEmployee(employee.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            ))}
+            {selectedEmployee && (
+              <Modal show={true} onHide={() => setSelectedEmployee(null)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>{selectedEmployee.first_name} {selectedEmployee.last_name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="employee-detail-container">
+                    <div className="left-details">
+                      <p><strong>Email:</strong> {selectedEmployee.email}</p>
+                      <p><strong>Date of Joining:</strong> {selectedEmployee.date_of_joining}</p>
+                      <p><strong>Gender:</strong> {selectedEmployee.gender}</p>
+                      <p><strong>Relationship Status:</strong> {selectedEmployee.relationship_status}</p>
+                      <p><strong>Department:</strong> {selectedEmployee.department}</p>
+                      <p><strong>Phone Number:</strong> {selectedEmployee.phone_number}</p>
+                      <p><strong>Address:</strong> {selectedEmployee.address}</p>
+                      <p><strong>Bio:</strong> {selectedEmployee.bio}</p>
+                    </div>
+                    <div className="right-profile">
+                      <img
+                        src={selectedEmployee.profile}
+                        alt={selectedEmployee.username}
+                        style={{ height: "300px", width: "290px", borderRadius: "15px" }}
+                      />
+                    </div>
+                  </div>
+                </Modal.Body>
+              </Modal>
+            )}
+            {editingEmployee && (
+              <div className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={() => setEditingEmployee(null)}>
+                    &times;
+                  </span>
+                  <h2>Edit Employee</h2>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleUpdate(editingEmployee);
+                    }}
+                  >
+                    <label>First Name:</label>
+                    <input
+                      type="text"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleChange}
+                    />
+                    <label>Last Name:</label>
+                    <input
+                      type="text"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleChange}
+                    />
+                    <label>Email:</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    <label>Gender:</label>
+                    <input
+                      type="text"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                    />
+                    <label>Relationship Status:</label>
+                    <input
+                      type="text"
+                      name="relationship_status"
+                      value={formData.relationship_status}
+                      onChange={handleChange}
+                    />
+                    <label>Department:</label>
+                    <input
+                      type="text"
+                      name="department"
+                      value={formData.department}
+                      onChange={handleChange}
+                    />
+                    <label>Date of Joining:</label>
+                    <input
+                      type="date"
+                      name="date_of_joining"
+                      value={formData.date_of_joining}
+                      onChange={handleChange}
+                    />
+                    <label>Phone Number:</label>
+                    <input
+                      type="text"
+                      name="phone_number"
+                      value={formData.phone_number}
+                      onChange={handleChange}
+                    />
+                    <label>Address:</label>
+                    <input
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                    />
+                    <label>Bio:</label>
+                    <input
+                      type="text"
+                      name="bio"
+                      value={formData.bio}
+                      onChange={handleChange}
+                    />
+                    <Button
+                      className="yes-button "
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </form>
+                </div>
               </div>
             )}
-          </Card>
-        ))}
-        {editingEmployee && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={() => setEditingEmployee(null)}>
-                &times;
-              </span>
-              <h2>Edit Employee</h2>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleUpdate(editingEmployee);
-                }}
-              >
-                <label>First Name:</label>
-                <input
-                  type="text"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                />
-                <label>Last Name:</label>
-                <input
-                  type="text"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                />
-                <label>Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-                <label>Gender:</label>
-                <input
-                  type="text"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                />
-                <label>Relationship Status:</label>
-                <input
-                  type="text"
-                  name="relationship_status"
-                  value={formData.relationship_status}
-                  onChange={handleChange}
-                />
-                <label>Department:</label>
-                <input
-                  type="text"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                />
-                <label>Date of Joining:</label>
-                <input
-                  type="date"
-                  name="date_of_joining"
-                  value={formData.date_of_joining}
-                  onChange={handleChange}
-                />
-                <label>Phone Number:</label>
-                <input
-                  type="text"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleChange}
-                />
-                <label>Address:</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-                <label>Bio:</label>
-                <input
-                  type="text"
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                />
-                <button type="submit">Update</button>
-              </form>
-            </div>
+            {deletingEmployee && (
+              <div className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={() => setDeletingEmployee(null)}>
+                    &times;
+                  </span>
+                  <h2>Are you sure you want to delete this employee?</h2>
+                  <Button
+                    className="yes-button "
+                    onClick={() => handleDelete(deletingEmployee)}
+                  >
+                    Yes
+                  </Button>
+                  <Button
+                    className="cancle-button"
+                    onClick={() => setDeletingEmployee(null)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-        {deletingEmployee && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={() => setDeletingEmployee(null)}>
-                &times;
-              </span>
-              <h2>Confirm Delete</h2>
-              <h4>Are you sure you want to delete this employee?</h4>
-              <button
-                onClick={() => handleDelete(deletingEmployee)}
-                className="yes-button"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => setDeletingEmployee(null)}
-                className="cancle-button"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-      </>
+        </>
       ) : (
-        <h4 className="card">No employees found.</h4>
+        <h2 className="loading-message">Loading employees...</h2>
       )}
     </div>
-    
   );
 };
 
