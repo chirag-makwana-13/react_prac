@@ -45,13 +45,13 @@
   transition: background-color 0.3s ease;
 }
 
-.employee-table button,.cancle-button,.yes-button:hover {
+.employee-table button:hover {
   background-color: #0056b3;
 }
 
 .employee-table .edit-button, .yes-button {
   background-color: #4caf50;
-  color: white;
+  color: white !important;
 }
 
 .employee-table .delete-button, .cancle-button {
@@ -80,6 +80,8 @@
   max-width: 500px;
   width: 100%;
   position: relative;
+  max-height: 700px;
+  overflow: scroll;
 }
 
 .modal-content h2 {
@@ -140,4 +142,15 @@
   padding: 8px;
   border-color: #92c0f5;
   width: 300px;
+}
+
+.hotline{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.hotline-card:hover{
+  box-shadow: 0 30px 50px -12px #002f4b1a;
+  transform: scale(1.02);
 }

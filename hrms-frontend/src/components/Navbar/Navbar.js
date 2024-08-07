@@ -40,7 +40,7 @@ const Navbar = ({ handleLogout }) => {
               to="/employees"
               className={activeLink === "employees" ? "active" : ""}
             >
-              Employees
+              Hotline
             </Link>
           </li>
           <li>

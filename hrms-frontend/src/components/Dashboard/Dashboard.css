@@ -126,7 +126,7 @@ strong{
     background-color: rgb(255, 240, 242);
 }
 
-.actions button, .refresh  {
+.actions button, .refresh, .addholiday ,.holiday-actions,.modal-buttons button {
     border-radius: 5px;
     color: #fff;
     padding: 10px 20px;
@@ -135,12 +135,18 @@ strong{
     transition: background-color 0.3s, transform 0.3s;
     margin: 5px;
 }
-
-.actions button.checkin,.refresh {
-    background-color: #28a745; /* Green */
+.deleteholiday,.updateholiday{
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 10px;
+    border: none;
+    cursor: pointer;
+}
+.actions button.checkin,.refresh,.addholiday {
+    background-color: #28a745 !important; /* Green */
 }
 
-.actions button.breakin {
+.actions button.breakin,.updateholiday {
     background-color: #ffb700; /* Saffron */
 }
 
@@ -148,8 +154,8 @@ strong{
     background-color: #ffc107; /* Yellow */
 }
 
-.actions button.checkout {
-    background-color: #dc3545; /* Red */
+.actions button.checkout, .deleteholiday {
+    background-color: #dc3545 !important; /* Red */
 }
 
 .actions button.disabled {
@@ -166,3 +172,29 @@ strong{
     margin: 10px 0;
 }
   
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+}
+
+.holiday-actions button {
+    margin-right: 20px;
+  }
