@@ -68,7 +68,9 @@ const EmployeeList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/employees/${id}/`);
+      await axios.put(`/employees/${id}/`,{  
+        is_deleted: 1,
+      });
       setEmployees(employees.filter((employee) => employee.id !== id));
       setMessage("Employee deleted successfully");
       setDeletingEmployee(null);
@@ -160,12 +162,12 @@ const EmployeeList = () => {
               <div
                 key={employee.id}
                 className="employee-card"
-                onClick={() => setSelectedEmployee(employee)}
-              >
+                >
                 <img
                   src={employee.profile ? employee.profile : "https://via.placeholder.com/200"}
                   alt={employee.username}
                   style={{ height: "300px", width: "290px", borderRadius: "15px" }}
+                  onClick={() => setSelectedEmployee(employee)}
                 />
                 <div className="card-body">
                   <h2>{employee.department}</h2>
@@ -186,6 +188,11 @@ const EmployeeList = () => {
                       >
                         Delete
                       </button>
+                      <button
+                        className="yes-button"
+                      >
+                        HR
+                      </button>
                     </div>
                   )}
                 </div>
@@ -198,23 +205,23 @@ const EmployeeList = () => {
                 <span className="close" onClick={() => setSelectedEmployee(null)}>
                   &times;
                 </span>
-                <h2 className="custom-modal-title">Employee Details</h2>
+                <h2 className="custom-modal-title">{selectedEmployee.first_name} {selectedEmployee.last_name}</h2>
               </div>
               <div className="employee-detail-container">
                 <div className="left-details">
-                  <p><strong>First Name:</strong> {selectedEmployee.first_name}</p>
-                  <p><strong>Last Name:</strong> {selectedEmployee.last_name}</p>
-                  <p><strong>Username:</strong> {selectedEmployee.username}</p>
-                  <p><strong>Email:</strong> {selectedEmployee.email}</p>
-                  <p><strong>Gender:</strong> {selectedEmployee.gender}</p>
-                  <p><strong>Relationship Status:</strong> {selectedEmployee.relationship_status}</p>
-                  <p><strong>Department:</strong> {selectedEmployee.department}</p>
-                  <p><strong>Date of Joining:</strong> {selectedEmployee.date_of_joining}</p>
-                  <p><strong>Phone Number:</strong> {selectedEmployee.phone_number}</p>
-                  <p><strong>Address:</strong> {selectedEmployee.address}</p>
+                  <p className="datahotline"><strong className="datastrong">First Name:</strong> {selectedEmployee.first_name}</p>
+                  <p className="datahotline"><strong className="datastrong">Last Name:</strong> {selectedEmployee.last_name}</p>
+                  <p className="datahotline"><strong className="datastrong">Username:</strong> {selectedEmployee.username}</p>
+                  <p className="datahotline"><strong className="datastrong">Email:</strong> {selectedEmployee.email}</p>
+                  <p className="datahotline"><strong className="datastrong">Gender:</strong> {selectedEmployee.gender}</p>
+                  <p className="datahotline"><strong className="datastrong">Relationship Status:</strong> {selectedEmployee.relationship_status}</p>
+                  <p className="datahotline"><strong className="datastrong">Department:</strong> {selectedEmployee.department}</p>
+                  <p className="datahotline"><strong className="datastrong">Date of Joining:</strong> {selectedEmployee.date_of_joining}</p>
+                  <p className="datahotline"><strong className="datastrong">Phone Number:</strong> {selectedEmployee.phone_number}</p>
+                  <p className="datahotline"><strong className="datastrong">Address:</strong> {selectedEmployee.address}</p>
                 </div>
                 <div className="middle-bio">
-                  <p>{selectedEmployee.bio}</p>
+                  Bio: <h2>{selectedEmployee.bio}</h2>
                 </div>
                 <div className="right-profile">
                   <img src={selectedEmployee.profile} alt={selectedEmployee.username} />
@@ -223,14 +230,12 @@ const EmployeeList = () => {
             </div>
           )}
           {editingEmployee && (
-            <div className="custom-modal">
-              <div className="custom-modal-header">
+            <div className="modal">
+              <div className="modal-content">
+                <h2>Update Employee</h2>
                 <span className="close" onClick={() => setEditingEmployee(null)}>
                   &times;
                 </span>
-                <h2 className="custom-modal-title">Edit Employee</h2>
-              </div>
-              <div className="modal-content">
                 <form onSubmit={(e) => {
                   e.preventDefault();
                   handleUpdate(editingEmployee);
@@ -241,6 +246,7 @@ const EmployeeList = () => {
                     name="first_name"
                     value={formData.first_name}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Last Name:</label>
                   <input
@@ -248,20 +254,23 @@ const EmployeeList = () => {
                     name="last_name"
                     value={formData.last_name}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
-                  <label>Username:</label>
+                  {/* <label>Username:</label>
                   <input
                     type="text"
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
-                  />
+                    style={{  width: "450px"}}
+                  /> */}
                   <label>Email:</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Gender:</label>
                   <input
@@ -269,6 +278,7 @@ const EmployeeList = () => {
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Relationship Status:</label>
                   <input
@@ -276,6 +286,7 @@ const EmployeeList = () => {
                     name="relationship_status"
                     value={formData.relationship_status}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Department:</label>
                   <input
@@ -283,6 +294,7 @@ const EmployeeList = () => {
                     name="department"
                     value={formData.department}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Date of Joining:</label>
                   <input
@@ -290,6 +302,7 @@ const EmployeeList = () => {
                     name="date_of_joining"
                     value={formData.date_of_joining}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Phone Number:</label>
                   <input
@@ -297,6 +310,7 @@ const EmployeeList = () => {
                     name="phone_number"
                     value={formData.phone_number}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Address:</label>
                   <input
@@ -304,30 +318,32 @@ const EmployeeList = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
+                    style={{  width: "450px"}}
                   />
                   <label>Profile Image:</label>
                   <input
                     type="file"
                     name="profile"
                     onChange={handleFileChange}
+                    style={{  width: "450px"}}
                   />
-                  <button type="submit">Update</button>
+                  <button className="yes-button" type="submit">Update</button>
                 </form>
               </div>
             </div>
           )}
           {deletingEmployee && (
-            <div className="custom-modal">
-              <div className="custom-modal-header">
+            <div className="modal">
+              {/* <div className="custom-modal-header">
+              </div> */}
+              <div className="modal-content">
+              <h2 className="custom-modal-title">Delete Employee</h2>
                 <span className="close" onClick={() => setDeletingEmployee(null)}>
                   &times;
                 </span>
-                <h2 className="custom-modal-title">Delete Employee</h2>
-              </div>
-              <div className="modal-content">
-                <p>Are you sure you want to delete this employee?</p>
-                <button onClick={() => handleDelete(deletingEmployee)}>Yes, Delete</button>
-                <button onClick={() => setDeletingEmployee(null)}>Cancel</button>
+                <h3>Are you sure you want to delete this employee?</h3>
+                <button onClick={() => handleDelete(deletingEmployee)} className="yes-button">Yes, Delete</button>
+                <button onClick={() => setDeletingEmployee(null)} className="cancel-button">Cancel</button>
               </div>
             </div>
           )}

@@ -235,9 +235,10 @@ const Leaves = () => {
                     />
                   </label>
                   <label>
-                    Type:
+                    Type:<br/><br/>
                     <select
                       name="type"
+                      style={{height:"30px", width:"500px"}}
                       value={newLeave.type}
                       onChange={handleInputChange}
                       required
@@ -249,18 +250,20 @@ const Leaves = () => {
                       <option value="SL">Sick Leave (SL)</option>
                     </select>
                   </label>
-                  <label>
-                    Reason:
+                  <label><br/><br/>
+                    Reason:<br/><br/>
                     <textarea
                       name="reason"
+                      style={{height:"30px", width:"500px"}}
                       value={newLeave.reason}
                       onChange={handleInputChange}
                     />
                   </label>
-                  <label>
-                    Leave Day Type:
+                  <label><br/><br/>
+                    Leave Day Type:<br/><br/>
                     <select
                       name="leave_day_type"
+                      style={{height:"30px", width:"500px"}}
                       value={newLeave.leave_day_type}
                       onChange={handleInputChange}
                     >
@@ -269,7 +272,7 @@ const Leaves = () => {
                       <option value="Last_Half">2nd Half Day</option>
                     </select>
                   </label>
-                  <button type="submit">Submit</button>
+                  <button className="add-leave-button" type="submit">Submit</button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
               </div>

@@ -13,7 +13,6 @@ const Login = ({ onLogin }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
 
-  console.log(user);
   if (user) {
     return navigate("/dashboard");
   }
@@ -25,7 +24,6 @@ const Login = ({ onLogin }) => {
         username,
         password,
       });
-      console.log(response, "rrrrrrrrrrrrrrrrrrrrr");
 
       dispatch(
         loginSuccess({

@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import './EmployeeProfile.css';
+import { useSelector } from "react-redux";
 
 const EmployeeProfile = () => {
+  const { userId } = useSelector((state) => state.userId);
   const [employee, setEmployee] = useState(null);
   const [formData, setFormData] = useState({
     first_name: '',
@@ -12,9 +14,10 @@ const EmployeeProfile = () => {
     gender: '',
     relationship_status: '',
     department: '',
-    date_of_joining: '',
+    dob: '',
     phone_number: '',
     address: '',
+    bio:'',
     profile: null,
   });
   const [error, setError] = useState(null);
@@ -24,7 +27,8 @@ const EmployeeProfile = () => {
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await api.get('/auth/user/'); // Make sure this endpoint is correct
+        const response = await api.get(`/profile/${userId}/`); // Make sure this endpoint is correct
+        console.log(response,"reeeeeee");
         setEmployee(response.data);
         setFormData({
           first_name: response.data.first_name || '',
@@ -33,9 +37,10 @@ const EmployeeProfile = () => {
           gender: response.data.gender || '',
           relationship_status: response.data.relationship_status || '',
           department: response.data.department || '',
-          date_of_joining: response.data.date_of_joining || '',
+          dob: response.data.dob || '',
           phone_number: response.data.phone_number || '',
           address: response.data.address || '',
+          bio: response.data.bio || '',
           profile: response.data.profile || null,
         });
       } catch (error) {
@@ -45,7 +50,7 @@ const EmployeeProfile = () => {
     };
 
     fetchEmployeeData();
-  }, []);
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +74,7 @@ const EmployeeProfile = () => {
     }
 
     try {
-      await api.put('/auth/user/', updatedData, {
+      await api.put(`/profile/${userId}/`, updatedData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -126,18 +131,11 @@ const EmployeeProfile = () => {
           value={formData.relationship_status}
           onChange={handleChange}
         />
-        <label>Department:</label>
-        <input
-          type="text"
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-        />
-        <label>Date of Joining:</label>
+        <label>Date of Birth:</label>
         <input
           type="date"
-          name="date_of_joining"
-          value={formData.date_of_joining}
+          name="dob"
+          value={formData.dob}
           onChange={handleChange}
         />
         <label>Phone Number:</label>
@@ -152,6 +150,13 @@ const EmployeeProfile = () => {
           type="text"
           name="address"
           value={formData.address}
+          onChange={handleChange}
+        />
+        <label>Bio:</label>
+        <input
+          type="text"
+          name="bio"
+          value={formData.bio}
           onChange={handleChange}
         />
         <label>Profile Image:</label>

@@ -33,7 +33,7 @@
 /* Middle section for the bio in the modal */
 .middle-bio {
   padding: 20px;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -46,8 +46,9 @@
 
 /* Style for the profile image */
 .right-profile img {
+  height: 500px;
   max-width: 100%;
-  height: auto;
+  /* height: auto; */
   border-radius: 15px;
 }
 
@@ -99,6 +100,7 @@
   padding: 10px 20px;
   margin: 10px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 /* Cancel button styles */
@@ -131,7 +133,7 @@
 
 /* Search input styles */
 .search {
-  width: 500px !important;
+  width: 350px !important;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
@@ -143,6 +145,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: scroll;
+  max-height: 800px;
 }
 
 /* Input field styles */
@@ -165,4 +169,21 @@ label {
 /* Employee detail styles */
 p {
   margin: 5px 0;
+}
+
+.modal{
+  width:400px;
+}
+
+.employee-card:hover{
+  transform: scale(1.03);
+  box-shadow: 0 25px 50px -12px #002f4b1a;
+}
+.datahotline{
+  font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.datastrong{
+  font-style: italic;
 }

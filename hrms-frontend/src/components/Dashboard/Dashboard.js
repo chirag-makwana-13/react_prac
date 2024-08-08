@@ -182,7 +182,6 @@ const Dashboard = () => {
       if (newHoliday.holiday_image)
         formData.append("holiday_image", newHoliday.holiday_image);
 
-      console.log(formData, "dfjkghsdfuikgyui");
       const response = await axios.put(
         `/holidays/${currentHoliday.id}/`,
         formData,
@@ -193,7 +192,6 @@ const Dashboard = () => {
         }
       );
 
-      console.log(response, "resssssss");
       const holidaysResponse = await axios.get("/holidays/");
       setHolidays(holidaysResponse.data);
       setShowUpdateHolidayModal(false);

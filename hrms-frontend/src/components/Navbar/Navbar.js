@@ -77,7 +77,7 @@ const Navbar = ({ handleLogout }) => {
         <div>
           <h1>{activeLink.charAt(0).toUpperCase() + activeLink.slice(1)}</h1>
         </div>
-        <Link to="/profile" style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+        <Link to="/profile" style={{ marginLeft: "auto", display: "flex", alignItems: "center", marginRight:"70px", textDecoration:"none" }}>
           <img
             src={
               profile
