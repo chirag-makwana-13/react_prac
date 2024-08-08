@@ -1,4 +1,3 @@
-// src/components/Auth/changePassword.js
 import React, { useState } from 'react';
 import axios from '../../api';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +11,22 @@ const ChangePassword = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const validateForm = () => {
+        if (newPassword !== confirmPassword) {
+            setError("New password and confirm password do not match.");
+            return false;
+        }
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');  // Clear any previous errors
+
+        if (!validateForm()) {
+            return;
+        }
+
         try {
             const response = await axios.put('/changepassword/', {
                 current_password: password,
@@ -25,7 +38,7 @@ const ChangePassword = () => {
                 navigate('/dashboard');
             }, 1000);
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response?.data?.message || "An error occurred. Please try again.");
         }
     };
 
@@ -39,7 +52,7 @@ const ChangePassword = () => {
                     <div className="form-group">
                         <label>Current Password:</label>
                         <input
-                            type="text"
+                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required

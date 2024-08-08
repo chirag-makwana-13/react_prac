@@ -12,6 +12,7 @@ const EmployeeList = () => {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [deletingEmployee, setDeletingEmployee] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [hrEmployee, setHrEmployee] = useState(null);
   const [message, setMessage] = useState("");
   const [searchEmployee, setSearchemployee] = useState("");
   const [formData, setFormData] = useState({
@@ -45,12 +46,10 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user data to check if the user is logged in and is an admin
         const userResponse = await axios.get("/auth/user/");
         setCurrentUser(userResponse.data);
         setIsAdmin(userResponse.data.is_staff);
 
-        // Fetch employees data
         const employeesResponse = await axios.get("/employees/", {
           params: {
             search: searchEmployee,
@@ -68,7 +67,7 @@ const EmployeeList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.put(`/employees/${id}/`,{  
+      await axios.put(`/employees/${id}/`, {
         is_deleted: 1,
       });
       setEmployees(employees.filter((employee) => employee.id !== id));
@@ -98,6 +97,28 @@ const EmployeeList = () => {
       });
     } else {
       setError("You do not have permission to edit this employee.");
+    }
+  };
+
+  const handleHR = (employee) => {
+    setHrEmployee(employee);
+  };
+
+  const confirmHR = async (id) => {
+    try {
+      await axios.put(`/employees/${id}/`, {
+        is_staff: true,
+      });
+      setEmployees(
+        employees.map((emp) =>
+          emp.id === id ? { ...emp, is_staff: true } : emp
+        )
+      );
+      setMessage("Employee promoted to HR successfully");
+      setHrEmployee(null);
+    } catch (error) {
+      console.error("Error promoting employee:", error);
+      setError("Failed to promote employee. Please try again later.");
     }
   };
 
@@ -159,14 +180,19 @@ const EmployeeList = () => {
         <>
           <div className="employee-cards">
             {employees.map((employee) => (
-              <div
-                key={employee.id}
-                className="employee-card"
-                >
+              <div key={employee.id} className="employee-card">
                 <img
-                  src={employee.profile ? employee.profile : "https://via.placeholder.com/200"}
+                  src={
+                    employee.profile
+                      ? employee.profile
+                      : "https://via.placeholder.com/200"
+                  }
                   alt={employee.username}
-                  style={{ height: "300px", width: "290px", borderRadius: "15px" }}
+                  style={{
+                    height: "300px",
+                    width: "290px",
+                    borderRadius: "15px",
+                  }}
                   onClick={() => setSelectedEmployee(employee)}
                 />
                 <div className="card-body">
@@ -174,9 +200,13 @@ const EmployeeList = () => {
                   <p style={{ fontSize: "20px" }}>
                     {employee.first_name} {employee.last_name}
                   </p>
-                  {(isAdmin || (currentUser && currentUser.id === employee.id)) && (
+                  {(isAdmin ||
+                    (currentUser && currentUser.id === employee.id)) && (
                     <div className="button-group">
-                      <button className="yes-button" onClick={() => handleEdit(employee)}>
+                      <button
+                        className="yes-button"
+                        onClick={() => handleEdit(employee)}
+                      >
                         Edit
                       </button>
                       <button
@@ -188,168 +218,272 @@ const EmployeeList = () => {
                       >
                         Delete
                       </button>
-                      <button
-                        className="yes-button"
-                      >
-                        HR
-                      </button>
+                      {!employee.is_staff && (
+                        <button
+                          className="yes-button"
+                          onClick={() => handleHR(employee)}
+                        >
+                          HR
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
               </div>
             ))}
           </div>
+
           {selectedEmployee && (
             <div className="custom-modal">
               <div className="custom-modal-header">
-                <span className="close" onClick={() => setSelectedEmployee(null)}>
+                <span
+                  className="close"
+                  onClick={() => setSelectedEmployee(null)}
+                >
                   &times;
                 </span>
-                <h2 className="custom-modal-title">{selectedEmployee.first_name} {selectedEmployee.last_name}</h2>
+                <h2 className="custom-modal-title">
+                  {selectedEmployee.first_name} {selectedEmployee.last_name}
+                </h2>
               </div>
               <div className="employee-detail-container">
                 <div className="left-details">
-                  <p className="datahotline"><strong className="datastrong">First Name:</strong> {selectedEmployee.first_name}</p>
-                  <p className="datahotline"><strong className="datastrong">Last Name:</strong> {selectedEmployee.last_name}</p>
-                  <p className="datahotline"><strong className="datastrong">Username:</strong> {selectedEmployee.username}</p>
-                  <p className="datahotline"><strong className="datastrong">Email:</strong> {selectedEmployee.email}</p>
-                  <p className="datahotline"><strong className="datastrong">Gender:</strong> {selectedEmployee.gender}</p>
-                  <p className="datahotline"><strong className="datastrong">Relationship Status:</strong> {selectedEmployee.relationship_status}</p>
-                  <p className="datahotline"><strong className="datastrong">Department:</strong> {selectedEmployee.department}</p>
-                  <p className="datahotline"><strong className="datastrong">Date of Joining:</strong> {selectedEmployee.date_of_joining}</p>
-                  <p className="datahotline"><strong className="datastrong">Phone Number:</strong> {selectedEmployee.phone_number}</p>
-                  <p className="datahotline"><strong className="datastrong">Address:</strong> {selectedEmployee.address}</p>
+                  <p className="datahotline">
+                    <strong className="datastrong">First Name:</strong>{" "}
+                    {selectedEmployee.first_name}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Last Name:</strong>{" "}
+                    {selectedEmployee.last_name}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Username:</strong>{" "}
+                    {selectedEmployee.username}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Email:</strong>{" "}
+                    {selectedEmployee.email}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Gender:</strong>{" "}
+                    {selectedEmployee.gender}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">
+                      Relationship Status:
+                    </strong>{" "}
+                    {selectedEmployee.relationship_status}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Department:</strong>{" "}
+                    {selectedEmployee.department}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Date of Joining:</strong>{" "}
+                    {selectedEmployee.date_of_joining}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Phone Number:</strong>{" "}
+                    {selectedEmployee.phone_number}
+                  </p>
+                  <p className="datahotline">
+                    <strong className="datastrong">Address:</strong>{" "}
+                    {selectedEmployee.address}
+                  </p>
                 </div>
-                <div className="middle-bio">
-                  Bio: <h2>{selectedEmployee.bio}</h2>
+                <div className="center-details">
+                  <p>
+                    <strong className="datastrong">Bio:</strong>
+                    <br />
+                    {selectedEmployee.bio}
+                  </p>
                 </div>
-                <div className="right-profile">
-                  <img src={selectedEmployee.profile} alt={selectedEmployee.username} />
+                <div className="right-details">
+                  <img
+                    src={
+                      selectedEmployee.profile
+                        ? selectedEmployee.profile
+                        : "https://via.placeholder.com/200"
+                    }
+                    alt={selectedEmployee.username}
+                    style={{ width: "200px", height: "200px" }}
+                  />
                 </div>
               </div>
             </div>
           )}
+
           {editingEmployee && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2>Update Employee</h2>
-                <span className="close" onClick={() => setEditingEmployee(null)}>
+            <div className="custom-modal">
+              <div className="custom-modal-header">
+                <span
+                  className="close"
+                  onClick={() => setEditingEmployee(null)}
+                >
                   &times;
                 </span>
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  handleUpdate(editingEmployee);
-                }}>
-                  <label>First Name:</label>
-                  <input
-                    type="text"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    style={{  width: "450px"}}
-                  />
-                  <label>Last Name:</label>
-                  <input
-                    type="text"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    style={{  width: "450px"}}
-                  />
-                  {/* <label>Username:</label>
+                <h2 className="custom-modal-title">Edit Employee</h2>
+              </div>
+              <div className="form-container">
+                <form>
+                  <label htmlFor="username">Username:</label>
                   <input
                     type="text"
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
-                  /> */}
-                  <label>Email:</label>
+                    className="modal-input"
+                  />
+                  <label htmlFor="first_name">First Name:</label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    value={formData.first_name}
+                    onChange={handleChange}
+                    className="modal-input"
+                  />
+                  <label htmlFor="last_name">Last Name:</label>
+                  <input
+                    type="text"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={handleChange}
+                    className="modal-input"
+                  />
+                  <label htmlFor="email">Email:</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Gender:</label>
+                  <label htmlFor="gender">Gender:</label>
                   <input
                     type="text"
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Relationship Status:</label>
+                  <label htmlFor="relationship_status">
+                    Relationship Status:
+                  </label>
                   <input
                     type="text"
                     name="relationship_status"
                     value={formData.relationship_status}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Department:</label>
+                  <label htmlFor="department">Department:</label>
                   <input
                     type="text"
                     name="department"
                     value={formData.department}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Date of Joining:</label>
+                  <label htmlFor="date_of_joining">Date of Joining:</label>
                   <input
                     type="date"
                     name="date_of_joining"
                     value={formData.date_of_joining}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Phone Number:</label>
+                  <label htmlFor="phone_number">Phone Number:</label>
                   <input
-                    type="text"
+                    type="tel"
                     name="phone_number"
                     value={formData.phone_number}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <label>Address:</label>
-                  <input
-                    type="text"
+                  <label htmlFor="address">Address:</label>
+                  <textarea
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    style={{  width: "450px"}}
+                    className="modal-textarea"
                   />
-                  <label>Profile Image:</label>
+                  <label htmlFor="profile">Profile Image:</label>
                   <input
                     type="file"
                     name="profile"
+                    accept="image/jpeg,image/jpg,image/png"
                     onChange={handleFileChange}
-                    style={{  width: "450px"}}
+                    className="modal-input"
                   />
-                  <button className="yes-button" type="submit">Update</button>
+                  <button
+                    type="button"
+                    className="yes-button"
+                    onClick={() => handleUpdate(editingEmployee)}
+                  >
+                    Update
+                  </button>
                 </form>
               </div>
             </div>
           )}
+
           {deletingEmployee && (
-            <div className="modal">
-              {/* <div className="custom-modal-header">
-              </div> */}
-              <div className="modal-content">
-              <h2 className="custom-modal-title">Delete Employee</h2>
+            <div className="custom-modal">
+              <div className="custom-modal-header">
                 <span className="close" onClick={() => setDeletingEmployee(null)}>
                   &times;
                 </span>
-                <h3>Are you sure you want to delete this employee?</h3>
-                <button onClick={() => handleDelete(deletingEmployee)} className="yes-button">Yes, Delete</button>
-                <button onClick={() => setDeletingEmployee(null)} className="cancel-button">Cancel</button>
+                <h2 className="custom-modal-title">Delete Employee</h2>
+              </div>
+              <div className="modal-content">
+                <p>Are you sure you want to delete this employee?</p>
+                <button
+                  className="yes-button"
+                  onClick={() => handleDelete(deletingEmployee)}
+                >
+                  Yes
+                </button>
+                <button
+                  className="cancel-button"
+                  onClick={() => setDeletingEmployee(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {hrEmployee && (
+            <div className="custom-modal">
+              <div className="custom-modal-header">
+                <span className="close" onClick={() => setHrEmployee(null)}>
+                  &times;
+                </span>
+                <h2 className="custom-modal-title">Promote to HR</h2>
+              </div>
+              <div className="modal-content">
+                <p>
+                  Are you sure you want to promote{" "}
+                  {hrEmployee.first_name} {hrEmployee.last_name} to HR?
+                </p>
+                <button
+                  className="yes-button"
+                  onClick={() => confirmHR(hrEmployee.id)}
+                >
+                  Yes
+                </button>
+                <button
+                  className="cancel-button"
+                  onClick={() => setHrEmployee(null)}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           )}
         </>
       ) : (
-        <p>No employees found</p>
+        <p>No employees found.</p>
       )}
     </div>
   );
