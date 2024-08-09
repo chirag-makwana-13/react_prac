@@ -143,23 +143,23 @@ strong{
     cursor: pointer;
 }
 .actions button.checkin,.refresh,.addholiday {
-    background-color: #28a745 !important; /* Green */
+    background-color: #28a745 !important;
 }
 
 .actions button.breakin,.updateholiday {
-    background-color: #ffb700; /* Saffron */
+    background-color: #ffb700;
 }
 
 .actions button.breakout {
-    background-color: #ffc107; /* Yellow */
+    background-color: #ffc107; 
 }
 
 .actions button.checkout, .deleteholiday {
-    background-color: #dc3545 !important; /* Red */
+    background-color: #dc3545 !important; 
 }
 
 .actions button.disabled {
-    background-color: #6c757d; /* Grey */
+    background-color: #6c757d; 
     cursor: not-allowed;
 }
 
@@ -168,7 +168,7 @@ strong{
 }
 
 .error-message {
-    color: #dc3545; /* Red */
+    color: #dc3545; 
     margin: 10px 0;
 }
   

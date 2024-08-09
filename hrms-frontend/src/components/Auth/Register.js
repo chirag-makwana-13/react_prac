@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../utils/api";
 import "./Register.css";
 
 const Register = () => {
@@ -38,15 +38,11 @@ const Register = () => {
 
     console.log(userData, "userdataaaaa");
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
-        userData,
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("/register/", userData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
       navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {

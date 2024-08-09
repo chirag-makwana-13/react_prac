@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../api";
+import axios from "../../utils/api";
 import "./Leaves.css";
 
 const Leaves = () => {
   const [leaves, setLeaves] = useState([]);
-  //   const [allleaves, setAllleaves] = useState([]);
   const [leaveDetails, setLeaveDetails] = useState({
     remaining_paid_leave: 0,
     remaining_unpaid_leave: 0,
@@ -27,17 +26,13 @@ const Leaves = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          leavesResponse,
-          leaveDetailsResponse,
-          userResponse,
-          //   allleaveResponse,
-        ] = await Promise.all([
-          (!isAdmin && axios.get("/leave/")) ||
-            (isAdmin && axios.get("/all-leaves/")),
-          axios.get("/leave-details/"),
-          axios.get("/auth/user/"),
-        ]);
+        const [leavesResponse, leaveDetailsResponse, userResponse] =
+          await Promise.all([
+            (!isAdmin && axios.get("/leave/")) ||
+              (isAdmin && axios.get("/all-leaves/")),
+            axios.get("/leave-details/"),
+            axios.get("/auth/user/"),
+          ]);
 
         setLeaves(leavesResponse.data.results);
         setLeaveDetails(leaveDetailsResponse.data[0]);
@@ -50,19 +45,6 @@ const Leaves = () => {
 
     fetchData();
   }, [isAdmin]);
-  // ----------------Another way a allleave admin side
-  // useEffect(() => {
-  //   if (isAdmin) {
-  //     axios
-
-  //       .then((response) => {
-  //         setLeaves(response.data.results);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [isAdmin]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -206,7 +188,7 @@ const Leaves = () => {
             </p>
             <h4>
               Name: {leaveDetails.first_name} {leaveDetails.last_name}
-            </h4> 
+            </h4>
           </div>
           <div className="leave-actions">
             <button
@@ -235,10 +217,12 @@ const Leaves = () => {
                     />
                   </label>
                   <label>
-                    Type:<br/><br/>
+                    Type:
+                    <br />
+                    <br />
                     <select
                       name="type"
-                      style={{height:"30px", width:"500px"}}
+                      style={{ height: "30px", width: "500px" }}
                       value={newLeave.type}
                       onChange={handleInputChange}
                       required
@@ -250,20 +234,28 @@ const Leaves = () => {
                       <option value="SL">Sick Leave (SL)</option>
                     </select>
                   </label>
-                  <label><br/><br/>
-                    Reason:<br/><br/>
+                  <label>
+                    <br />
+                    <br />
+                    Reason:
+                    <br />
+                    <br />
                     <textarea
                       name="reason"
-                      style={{height:"30px", width:"500px"}}
+                      style={{ height: "30px", width: "500px" }}
                       value={newLeave.reason}
                       onChange={handleInputChange}
                     />
                   </label>
-                  <label><br/><br/>
-                    Leave Day Type:<br/><br/>
+                  <label>
+                    <br />
+                    <br />
+                    Leave Day Type:
+                    <br />
+                    <br />
                     <select
                       name="leave_day_type"
-                      style={{height:"30px", width:"500px"}}
+                      style={{ height: "30px", width: "500px" }}
                       value={newLeave.leave_day_type}
                       onChange={handleInputChange}
                     >
@@ -272,7 +264,9 @@ const Leaves = () => {
                       <option value="Last_Half">2nd Half Day</option>
                     </select>
                   </label>
-                  <button className="add-leave-button" type="submit">Submit</button>
+                  <button className="add-leave-button" type="submit">
+                    Submit
+                  </button>
                 </form>
                 {error && <p className="error-message">{error}</p>}
               </div>

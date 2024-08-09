@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // Choose your storage engine
+import storage from "redux-persist/lib/storage"; 
 import authSlice from "./AuthSlice";
 
 const persistConfig = {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../api";
+import axios from "../../utils/api";
 import "./AttedanceReport.css";
 import Pagination from "../Pagination";
 
@@ -32,7 +32,9 @@ const AttedanceReport = () => {
           params.end_date = customEndDate;
         }
 
-        const attendancereportResponse = await axios.get("/attendanceReport/", { params });
+        const attendancereportResponse = await axios.get("/attendanceReport/", {
+          params,
+        });
         setAttedancereport(attendancereportResponse.data.results);
         const dataAdd = attendancereportResponse.data.results[0];
         setDataReport({
@@ -45,7 +47,7 @@ const AttedanceReport = () => {
         setTotalPage(Math.ceil(attendancereportResponse.data.count / 10));
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError("Failed to load data. Please try again later.");
+        setError("No Data");
       }
     };
 
@@ -82,27 +84,47 @@ const AttedanceReport = () => {
   function secondsToHms(d) {
     d = Number(d);
     var h = Math.floor(d / 3600);
-    var m = Math.floor(d % 3600 / 60);
+    var m = Math.floor((d % 3600) / 60);
 
     var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
-    return hDisplay + mDisplay; 
-}
+    return hDisplay + mDisplay;
+  }
 
   return (
     <div className="attendance-list-container">
       <h1>Attendace-Report List</h1>
       <div className="lcard">
-        <p className="ulcard p"><strong>Days: </strong><br/><br/>{dataReport.total_present_days}</p>
-        <p className="plcard p"><strong>Late: </strong><br/><br/>{dataReport.total_late_days}</p>
-        <p className="ulcard p"><strong>Half Days: </strong><br/><br/>{dataReport.total_half_days}</p>
-        <p className="plcard p"><strong>Total Office: </strong><br/><br/>{dataReport.total_office_hours}</p>
-        <p className="ulcard p"><strong>Total worked: </strong><br/><br/>{secondsToHms(dataReport.total_working_hours)}</p>
-      </div><br/>
+        <p className="ulcard p">
+          <strong>Days: </strong>
+          {dataReport.total_present_days}
+        </p>
+        <p className="plcard p">
+          <strong>Late: </strong>
+          {dataReport.total_late_days}
+        </p>
+        <p className="ulcard p">
+          <strong>Half Days: </strong>
+          {dataReport.total_half_days}
+        </p>
+        <p className="plcard p">
+          <strong>Total Office: </strong>
+          {dataReport.total_office_hours}
+        </p>
+        <p className="ulcard p">
+          <strong>Total worked: </strong>
+          {secondsToHms(dataReport.total_working_hours)}
+        </p>
+      </div>
+      <br />
 
       <div className="filter-container">
         <label htmlFor="filterType">Filter By:</label>
-        <select id="filterType" value={filterType} onChange={handleFilterChange}>
+        <select
+          id="filterType"
+          value={filterType}
+          onChange={handleFilterChange}
+        >
           <option value="thisMonth">This Month</option>
           <option value="lastMonth">Last Month</option>
           <option value="custom">Custom Range</option>
@@ -111,10 +133,20 @@ const AttedanceReport = () => {
         {filterType === "custom" && (
           <div className="custom-date-range">
             <label htmlFor="customStartDate">Start Date:</label>
-            <input type="date" id="customStartDate" value={customStartDate} onChange={handleCustomStartDateChange} />
+            <input
+              type="date"
+              id="customStartDate"
+              value={customStartDate}
+              onChange={handleCustomStartDateChange}
+            />
 
             <label htmlFor="customEndDate">End Date:</label>
-            <input type="date" id="customEndDate" value={customEndDate} onChange={handleCustomEndDateChange} />
+            <input
+              type="date"
+              id="customEndDate"
+              value={customEndDate}
+              onChange={handleCustomEndDateChange}
+            />
           </div>
         )}
       </div>

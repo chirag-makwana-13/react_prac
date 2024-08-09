@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "../../api";
+import axios from "../../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "./AuthSlice";
+import { loginSuccess } from "../../store/AuthSlice";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");

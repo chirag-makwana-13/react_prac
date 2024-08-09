@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { debounce } from "lodash";
-import axios from "../../api";
+import axios from "../../utils/api";
 import "./EmployeeList.css";
 
 const EmployeeList = () => {
@@ -269,9 +269,7 @@ const EmployeeList = () => {
                     {selectedEmployee.gender}
                   </p>
                   <p className="datahotline">
-                    <strong className="datastrong">
-                      Relationship Status:
-                    </strong>{" "}
+                    <strong className="datastrong">Relationship Status:</strong>{" "}
                     {selectedEmployee.relationship_status}
                   </p>
                   <p className="datahotline">
@@ -293,7 +291,7 @@ const EmployeeList = () => {
                 </div>
                 <div className="middle-bio">
                   <p>
-                    <h2 className="datastrong" >Bio:</h2>
+                    <h2 className="datastrong">Bio:</h2>
                     <h1>{selectedEmployee.bio}</h1>
                   </p>
                 </div>
@@ -427,7 +425,10 @@ const EmployeeList = () => {
           {deletingEmployee && (
             <div className="modal">
               <div className="modal-content">
-                <span className="close" onClick={() => setDeletingEmployee(null)}>
+                <span
+                  className="close"
+                  onClick={() => setDeletingEmployee(null)}
+                >
                   &times;
                 </span>
                 <h2 className="custom-modal-title">Delete Employee</h2>
@@ -456,8 +457,8 @@ const EmployeeList = () => {
                 </span>
                 <h2 className="custom-modal-title">Promote to HR</h2>
                 <h4>
-                  Are you sure you want to promote{" "}
-                  {hrEmployee.first_name} {hrEmployee.last_name} to HR?
+                  Are you sure you want to promote {hrEmployee.first_name}{" "}
+                  {hrEmployee.last_name} to HR?
                 </h4>
                 <button
                   className="yes-button"

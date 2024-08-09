@@ -1,51 +1,49 @@
-// src/components/EmployeeProfile.js
-import React, { useState, useEffect } from 'react';
-import api from '../../api';
-import './EmployeeProfile.css';
+import React, { useState, useEffect } from "react";
+import api from "../../utils/api";
+import "./EmployeeProfile.css";
 import { useSelector } from "react-redux";
 
 const EmployeeProfile = () => {
   const { userId } = useSelector((state) => state.userId);
   const [employee, setEmployee] = useState(null);
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    gender: '',
-    relationship_status: '',
-    department: '',
-    dob: '',
-    phone_number: '',
-    address: '',
-    bio:'',
+    first_name: "",
+    last_name: "",
+    email: "",
+    gender: "",
+    relationship_status: "",
+    department: "",
+    dob: "",
+    phone_number: "",
+    address: "",
+    bio: "",
     profile: null,
   });
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
-  // Fetch employee data
   useEffect(() => {
     const fetchEmployeeData = async () => {
       try {
-        const response = await api.get(`/profile/${userId}/`); // Make sure this endpoint is correct
-        console.log(response,"reeeeeee");
+        const response = await api.get(`/profile/${userId}/`);
+        console.log(response, "reeeeeee");
         setEmployee(response.data);
         setFormData({
-          first_name: response.data.first_name || '',
-          last_name: response.data.last_name || '',
-          email: response.data.email || '',
-          gender: response.data.gender || '',
-          relationship_status: response.data.relationship_status || '',
-          department: response.data.department || '',
-          dob: response.data.dob || '',
-          phone_number: response.data.phone_number || '',
-          address: response.data.address || '',
-          bio: response.data.bio || '',
+          first_name: response.data.first_name || "",
+          last_name: response.data.last_name || "",
+          email: response.data.email || "",
+          gender: response.data.gender || "",
+          relationship_status: response.data.relationship_status || "",
+          department: response.data.department || "",
+          dob: response.data.dob || "",
+          phone_number: response.data.phone_number || "",
+          address: response.data.address || "",
+          bio: response.data.bio || "",
           profile: response.data.profile || null,
         });
       } catch (error) {
-        console.error('Error fetching employee data:', error);
-        setError('Failed to load employee data.');
+        console.error("Error fetching employee data:", error);
+        setError("Failed to load employee data.");
       }
     };
 
@@ -59,10 +57,10 @@ const EmployeeProfile = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file && ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+    if (file && ["image/jpeg", "image/jpg", "image/png"].includes(file.type)) {
       setFormData((prevData) => ({ ...prevData, profile: file }));
     } else {
-      alert('Please select a valid image file (jpg, jpeg, png).');
+      alert("Please select a valid image file (jpg, jpeg, png).");
     }
   };
 
@@ -76,13 +74,13 @@ const EmployeeProfile = () => {
     try {
       await api.put(`/profile/${userId}/`, updatedData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-      setMessage('Profile updated successfully.');
+      setMessage("Profile updated successfully.");
     } catch (error) {
-      console.error('Error updating employee data:', error);
-      setError('Failed to update profile. Please try again later.');
+      console.error("Error updating employee data:", error);
+      setError("Failed to update profile. Please try again later.");
     }
   };
 
@@ -160,11 +158,7 @@ const EmployeeProfile = () => {
           onChange={handleChange}
         />
         <label>Profile Image:</label>
-        <input
-          type="file"
-          name="profile"
-          onChange={handleFileChange}
-        />
+        <input type="file" name="profile" onChange={handleFileChange} />
         <button type="submit">Update</button>
       </form>
     </div>
