@@ -291,14 +291,13 @@ const EmployeeList = () => {
                     {selectedEmployee.address}
                   </p>
                 </div>
-                <div className="center-details">
+                <div className="middle-bio">
                   <p>
-                    <strong className="datastrong">Bio:</strong>
-                    <br />
-                    {selectedEmployee.bio}
+                    <h2 className="datastrong" >Bio:</h2>
+                    <h1>{selectedEmployee.bio}</h1>
                   </p>
                 </div>
-                <div className="right-details">
+                <div className="right-profile">
                   <img
                     src={
                       selectedEmployee.profile
@@ -306,7 +305,7 @@ const EmployeeList = () => {
                         : "https://via.placeholder.com/200"
                     }
                     alt={selectedEmployee.username}
-                    style={{ width: "200px", height: "200px" }}
+                    // style={{ width: "400px", height: "500px", borderRadius:"15px" }}
                   />
                 </div>
               </div>
@@ -314,8 +313,8 @@ const EmployeeList = () => {
           )}
 
           {editingEmployee && (
-            <div className="custom-modal">
-              <div className="custom-modal-header">
+            <div className="modal">
+              <div className="modal-content">
                 <span
                   className="close"
                   onClick={() => setEditingEmployee(null)}
@@ -323,8 +322,6 @@ const EmployeeList = () => {
                   &times;
                 </span>
                 <h2 className="custom-modal-title">Edit Employee</h2>
-              </div>
-              <div className="form-container">
                 <form>
                   <label htmlFor="username">Username:</label>
                   <input
@@ -428,15 +425,13 @@ const EmployeeList = () => {
           )}
 
           {deletingEmployee && (
-            <div className="custom-modal">
-              <div className="custom-modal-header">
+            <div className="modal">
+              <div className="modal-content">
                 <span className="close" onClick={() => setDeletingEmployee(null)}>
                   &times;
                 </span>
                 <h2 className="custom-modal-title">Delete Employee</h2>
-              </div>
-              <div className="modal-content">
-                <p>Are you sure you want to delete this employee?</p>
+                <h3>Are you sure you want to delete this employee?</h3>
                 <button
                   className="yes-button"
                   onClick={() => handleDelete(deletingEmployee)}
@@ -454,18 +449,16 @@ const EmployeeList = () => {
           )}
 
           {hrEmployee && (
-            <div className="custom-modal">
-              <div className="custom-modal-header">
+            <div className="modal">
+              <div className="modal-content">
                 <span className="close" onClick={() => setHrEmployee(null)}>
                   &times;
                 </span>
                 <h2 className="custom-modal-title">Promote to HR</h2>
-              </div>
-              <div className="modal-content">
-                <p>
+                <h4>
                   Are you sure you want to promote{" "}
                   {hrEmployee.first_name} {hrEmployee.last_name} to HR?
-                </p>
+                </h4>
                 <button
                   className="yes-button"
                   onClick={() => confirmHR(hrEmployee.id)}

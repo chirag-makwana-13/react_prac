@@ -1,13 +1,10 @@
-/* General container styling */
 .employee-list-container {
   padding: 20px;
   font-family: Arial, sans-serif;
   margin-top: -50px;
-  height: 100vh
+  height: 100vh;
 }
 
-
-/* Layout for the employee detail modal */
 .employee-detail-container {
   display: flex;
   justify-content: space-between;
@@ -16,7 +13,6 @@
   flex-wrap: wrap;
 }
 
-/* Left side details in the modal */
 .left-details,
 .middle-bio,
 .right-profile {
@@ -24,27 +20,23 @@
   min-width: 200px;
 }
 
-/* Left side details in the modal */
 .left-details {
   padding: 20px;
   font-size: 16px;
 }
 
-/* Middle section for the bio in the modal */
 .middle-bio {
   padding: 20px;
   font-size: 18px;
   text-align: center;
 }
 
-/* Right side profile image in the modal */
 .right-profile {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Style for the profile image */
 .right-profile img {
   height: 500px;
   max-width: 100%;
@@ -52,7 +44,6 @@
   border-radius: 15px;
 }
 
-/* Custom modal styles */
 .custom-modal {
   position: fixed;
   top: 50%;
@@ -70,7 +61,6 @@
   flex-direction: column;
 }
 
-/* Custom modal header styles */
 .custom-modal-header {
   display: flex;
   justify-content: space-between;
@@ -79,19 +69,16 @@
   margin-bottom: 20px;
 }
 
-/* Title in the custom modal */
 .custom-modal-title {
   flex: 1;
   text-align: center;
 }
 
-/* Close button in the custom modal */
 .close {
   font-size: 24px;
   cursor: pointer;
 }
 
-/* Button styles */
 .yes-button,
 .cancel-button {
   background-color: green;
@@ -103,25 +90,21 @@
   border-radius: 10px;
 }
 
-/* Cancel button styles */
 .cancel-button {
   background-color: red;
 }
 
-/* Hover effect for buttons */
 .yes-button:hover,
 .cancel-button:hover {
   opacity: 0.8;
 }
 
-/* Container for employee cards */
 .employee-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-/* Employee card styles */
 .employee-card {
   width: 18rem;
   margin-top: 30px;
@@ -131,7 +114,6 @@
   overflow: hidden;
 }
 
-/* Search input styles */
 .search {
   width: 350px !important;
   padding: 10px;
@@ -140,7 +122,6 @@
   border-radius: 5px;
 }
 
-/* Modal content styles */
 .modal-content {
   display: flex;
   flex-direction: column;
@@ -149,7 +130,6 @@
   max-height: 800px;
 }
 
-/* Input field styles */
 input[type="text"],
 input[type="email"],
 input[type="date"],
@@ -161,29 +141,27 @@ input[type="file"] {
   border-radius: 5px;
 }
 
-/* Label styles */
 label {
   font-weight: bold;
 }
 
-/* Employee detail styles */
 p {
   margin: 5px 0;
 }
 
-.modal{
-  width:400px;
+.modal {
+  width: 400px;
 }
 
-.employee-card:hover{
+.employee-card:hover {
   transform: scale(1.03);
   box-shadow: 0 25px 50px -12px #002f4b1a;
 }
-.datahotline{
+.datahotline {
   font-size: 20px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
-.datastrong{
+.datastrong {
   font-style: italic;
 }

@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -32,7 +31,7 @@ const App = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.clear();
-    window.location.href = "/login"; // Redirect to login page after logout
+    window.location.href = "/login"; 
   };
 
   return (

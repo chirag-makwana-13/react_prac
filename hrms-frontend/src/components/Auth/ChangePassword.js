@@ -21,7 +21,7 @@ const ChangePassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');  // Clear any previous errors
+        setError('');
 
         if (!validateForm()) {
             return;
@@ -38,7 +38,7 @@ const ChangePassword = () => {
                 navigate('/dashboard');
             }, 1000);
         } catch (error) {
-            setError(error.response?.data?.message || "An error occurred. Please try again.");
+            setError(error.response?.data?.message || "Current password wrong  OR Password must contain at least 8 characters");
         }
     };
 
