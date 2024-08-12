@@ -11,19 +11,18 @@ const Leaves = () => {
     remaining_sick_leave: 0,
     total_approved_leaves: 0,
     first_name: "",
-    last_name: "",
+    last_name: "", 
   });
   const [newLeave, setNewLeave] = useState({
     date: "",
     type: "",
-    reason: "",
-    leave_day_type: "Full_Day",
+    reason: "", 
   });
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchData = async () => {
       try {
         const [leavesResponse, leaveDetailsResponse, userResponse] =
@@ -31,7 +30,7 @@ const Leaves = () => {
             (!isAdmin && axios.get("/leave/")) ||
               (isAdmin && axios.get("/all-leaves/")),
             axios.get("/leave-details/"),
-            axios.get("/auth/user/"),
+            axios.get("/auth/user/"), 
           ]);
 
         setLeaves(leavesResponse.data.results);

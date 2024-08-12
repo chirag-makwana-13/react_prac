@@ -30,6 +30,6 @@ const Dashboard = () => {
       </section>
     </div>
   );
-};
+}; 
 
 export default Dashboard;

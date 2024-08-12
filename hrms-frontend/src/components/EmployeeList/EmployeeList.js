@@ -446,7 +446,7 @@ const EmployeeList = () => {
                   Cancel
                 </button>
               </div>
-            </div>
+            </div> 
           )}
 
           {hrEmployee && (
@@ -470,7 +470,7 @@ const EmployeeList = () => {
                   className="cancel-button"
                   onClick={() => setHrEmployee(null)}
                 >
-                  Cancel
+                  Cancel 
                 </button>
               </div>
             </div>
@@ -482,5 +482,5 @@ const EmployeeList = () => {
     </div>
   );
 };
-
+ 
 export default EmployeeList;
