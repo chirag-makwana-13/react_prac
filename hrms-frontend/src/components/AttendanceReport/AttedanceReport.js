@@ -44,7 +44,7 @@ const AttedanceReport = () => {
           total_late_days: dataAdd.total_late_days,
           total_half_days: dataAdd.total_half_days,
         });
-        setTotalPage(Math.ceil(attendancereportResponse.data.count / 10));
+        setTotalPage(Math.ceil(attendancereportResponse.data.count / 5));
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("No Data");
@@ -86,8 +86,8 @@ const AttedanceReport = () => {
     var h = Math.floor(d / 3600);
     var m = Math.floor((d % 3600) / 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
+    var hDisplay = h > 0 ? h + (h === 1 ? " hrs, " : " hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m === 1 ? " mins " : " mins ") : "";
     return hDisplay + mDisplay;
   }
 

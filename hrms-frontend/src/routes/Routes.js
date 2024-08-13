@@ -13,6 +13,7 @@ import AttedanceReport from "../components/AttendanceReport/AttedanceReport";
 import Leaves from "../components/Leaves/Leaves";
 import MyCalendar from "../components/Calender/Calender";
 import EmployeeProfile from "../components/EmployeeProfile/EmployeeProfile";
+import Map from "../components/Map/Map";
 
 const HrmsRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +81,14 @@ const HrmsRoutes = () => {
             element={
               <ProtectedRoute>
                 <MyCalendar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              <ProtectedRoute>
+                <Map />
               </ProtectedRoute>
             }
           />

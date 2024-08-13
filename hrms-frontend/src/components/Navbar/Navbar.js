@@ -62,6 +62,14 @@ const Navbar = ({ handleLogout }) => {
           </li>
           <li>
             <Link
+              to="/map"
+              className={activeLink === "map" ? "active" : ""}
+            >
+              Map
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/changepassword"
               className={activeLink === "changepassword" ? "active" : ""}
             >
