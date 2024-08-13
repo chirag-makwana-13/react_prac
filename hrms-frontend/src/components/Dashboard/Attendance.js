@@ -1,6 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../utils/api";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale, // Register the category scale
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
 import "./Dashboard.css";
+
+// Registering the components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Attendance = () => {
   const [error, setError] = useState("");
@@ -48,6 +69,23 @@ const Attendance = () => {
     return hDisplay + mDisplay;
   }
 
+  const chartData = {
+    labels: ["Present Days", "Late Days", "Half Days"],
+    datasets: [
+      {
+        label: "Attendance Overview",
+        data: [
+          dataReport.total_present_days,
+          dataReport.total_late_days,
+          dataReport.total_half_days,
+        ],
+        backgroundColor: ["#4caf50", "#ff9800", "#f44336"],
+        borderColor: ["#388e3c", "#f57c00", "#d32f2f"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <div>
       <div className="">
@@ -78,6 +116,9 @@ const Attendance = () => {
                 </p>
               </div>
             </div>
+          </div>
+          <div className="chart-container">
+            <Bar data={chartData} options={{ responsive: true }} />
           </div>
         </section>
       </div>
