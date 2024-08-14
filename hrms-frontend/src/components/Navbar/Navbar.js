@@ -9,6 +9,7 @@ const Navbar = ({ handleLogout }) => {
   const { firstName } = useSelector((state) => state.firstName);
   const { lastName } = useSelector((state) => state.lastName);
   const { profile } = useSelector((state) => state.profile);
+  const { role } = useSelector((state) => state.role);
 
   useEffect(() => {
     const path = location.pathname.split("/")[1];
@@ -38,7 +39,7 @@ const Navbar = ({ handleLogout }) => {
           </li>
           <li>
             <Link
-              to="/attendance"
+              to={role === "admin" ? "/admin/attendance" : "/attendance"}
               className={activeLink === "attendance" ? "active" : ""}
             >
               Attendance
@@ -61,10 +62,7 @@ const Navbar = ({ handleLogout }) => {
             </Link>
           </li>
           <li>
-            <Link
-              to="/map"
-              className={activeLink === "map" ? "active" : ""}
-            >
+            <Link to="/map" className={activeLink === "map" ? "active" : ""}>
               Map
             </Link>
           </li>
@@ -81,11 +79,23 @@ const Navbar = ({ handleLogout }) => {
           Logout
         </button>
       </nav>
-      <div className="top-bar" style={{ display: "flex", alignItems: "center" }}>
+      <div
+        className="top-bar"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         <div>
           <h1>{activeLink.charAt(0).toUpperCase() + activeLink.slice(1)}</h1>
         </div>
-        <Link to="/profile" style={{ marginLeft: "auto", display: "flex", alignItems: "center", marginRight:"70px", textDecoration:"none" }}>
+        <Link
+          to="/profile"
+          style={{
+            marginLeft: "auto",
+            display: "flex",
+            alignItems: "center",
+            marginRight: "70px",
+            textDecoration: "none",
+          }}
+        >
           <img
             src={
               profile

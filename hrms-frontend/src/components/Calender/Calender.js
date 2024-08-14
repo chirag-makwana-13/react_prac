@@ -54,7 +54,7 @@ const MyCalendar = () => {
   const fetchLeaves = async () => {
     try {
       const response = await axios.get("/all-leaves/");
-      const leaves = response.data.results;
+      const leaves = response.data;
 
       // Map leave data to calendar events
       const leaveEvents = leaves

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../utils/api";
+import Pagination from "../Pagination";
 import "./Leaves.css";
 
 const Leaves = () => {
   const [leaves, setLeaves] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [leaveDetails, setLeaveDetails] = useState({
     remaining_paid_leave: 0,
     remaining_unpaid_leave: 0,
@@ -11,29 +14,41 @@ const Leaves = () => {
     remaining_sick_leave: 0,
     total_approved_leaves: 0,
     first_name: "",
-    last_name: "", 
+    last_name: "",
   });
   const [newLeave, setNewLeave] = useState({
     date: "",
     type: "",
-    reason: "", 
+    reason: "",
   });
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => { 
+  useEffect(() => {
+    const params = {
+      page: currentPage,
+    };
+
     const fetchData = async () => {
       try {
         const [leavesResponse, leaveDetailsResponse, userResponse] =
           await Promise.all([
-            (!isAdmin && axios.get("/leave/")) ||
+            (!isAdmin &&
+              axios.get("/leave/", {
+                params,
+              })) ||
               (isAdmin && axios.get("/all-leaves/")),
             axios.get("/leave-details/"),
-            axios.get("/auth/user/"), 
+            axios.get("/auth/user/"),
           ]);
 
-        setLeaves(leavesResponse.data.results);
+        if (isAdmin) {
+          setLeaves(leavesResponse.data);
+        } else {
+          setLeaves(leavesResponse.data.results);
+          setTotalPage(Math.ceil(leavesResponse.data.count / 5));
+        }
         setLeaveDetails(leaveDetailsResponse.data[0]);
         setIsAdmin(userResponse.data.is_staff);
       } catch (error) {
@@ -43,7 +58,11 @@ const Leaves = () => {
     };
 
     fetchData();
-  }, [isAdmin]);
+  }, [currentPage, isAdmin]);
+
+  const handlePageChage = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -139,18 +158,25 @@ const Leaves = () => {
                       <td>{allleave.status}</td>
                       <td>{allleave.reason || "-"}</td>
                       <td>{allleave.leave_day_type}</td>
-                      <button
-                        className="add-leave-button"
-                        onClick={() => handleApprove(allleave.id)}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="remove-leave-button"
-                        onClick={() => handleRejected(allleave.id)}
-                      >
-                        Rejected
-                      </button>
+                      {allleave.status === "Pending" ? (
+                        <td>
+                          {" "}
+                          <button
+                            className="add-leave-button"
+                            onClick={() => handleApprove(allleave.id)}
+                          >
+                            Approve
+                          </button>
+                          <button
+                            className="remove-leave-button"
+                            onClick={() => handleRejected(allleave.id)}
+                          >
+                            Rejected
+                          </button>
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -307,6 +333,11 @@ const Leaves = () => {
                 </tbody>
               )}
             </table>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPage}
+              onPageChange={handlePageChage}
+            />
           </div>
         </>
       )}

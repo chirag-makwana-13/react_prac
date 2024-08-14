@@ -95,9 +95,9 @@ const AttedanceReport = () => {
     return hDisplay + mDisplay;
   }
 
-  if (role === "admin") {
-    return <AdminAttendance />;
-  }
+  // if (role === "admin") {
+  //   return <AdminAttendance />;
+  // }
 
   return (
     <div className="attendance-list-container">

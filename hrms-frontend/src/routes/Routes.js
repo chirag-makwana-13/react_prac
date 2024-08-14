@@ -62,7 +62,7 @@ const HrmsRoutes = () => {
             }
           />
           <Route
-            path="/admin/attendance/:employeeId"
+            path="/admin/attendance"
             element={
               <ProtectedRoute>
                 <AdminAttendance />

@@ -35,8 +35,6 @@ const Register = () => {
       setErrors({ password: "Passwords do not match" });
       return;
     }
-
-    console.log(userData, "userdataaaaa");
     try {
       await axios.post("/register/", userData, {
         headers: {
