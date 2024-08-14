@@ -38,7 +38,7 @@ const Register = () => {
 
     console.log(userData, "userdataaaaa");
     try {
-      const response = await axios.post("/register/", userData, {
+      await axios.post("/register/", userData, {
         headers: {
           "content-type": "multipart/form-data",
         },

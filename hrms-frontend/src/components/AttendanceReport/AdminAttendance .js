@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/api";
 import "./AdminAttendance.css";
+import Pagination from "../Pagination";
 
 const AdminAttendance = () => {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
-  const [employee, setEmployee] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
   const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [summary, setSummary] = useState({
     total_office_hours: 0,
     total_present_days: 0,
@@ -35,26 +33,22 @@ const AdminAttendance = () => {
 
   const handleShowAttendance = async (employeeId) => {
     try {
+      const params = {
+        page: currentPage,
+      };
       setSelectedEmployeeId(employeeId);
 
-      // Fetch selected employee details
-      const employeeResponse = await axios.get(`/employees/${employeeId}/`);
-      setEmployee({
-        firstName: employeeResponse.data.first_name,
-        lastName: employeeResponse.data.last_name,
-        email: employeeResponse.data.email,
-      });
-
-      // Fetch all attendance records for the selected employee
       const attendanceResponse = await axios.get(
-        `/attendanceReport/?id=${employeeId}`
+        `/attendanceReport/?id=${employeeId}`,
+        {
+          params,
+        }
       );
       const attendanceData = attendanceResponse.data.results;
-      
+
       if (attendanceData.length > 0) {
         setAttendanceRecords(attendanceData);
 
-        // Update summary based on the first record
         setSummary({
           total_office_hours: attendanceData[0].total_office_hours,
           total_present_days: attendanceData[0].total_present_days,
@@ -70,6 +64,7 @@ const AdminAttendance = () => {
           total_half_days: 0,
         });
       }
+      setTotalPage(Math.ceil(attendanceResponse.data.count / 5));
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Failed to fetch data.");
@@ -84,6 +79,10 @@ const AdminAttendance = () => {
       minute: "2-digit",
       hour12: true,
     });
+  };
+
+  const handlePageChage = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -121,16 +120,6 @@ const AdminAttendance = () => {
 
       {selectedEmployeeId && (
         <>
-          {/* <div className="employee-details">
-            <h2>Employee Details</h2>
-            <p>
-              <strong>Name:</strong> {employee.firstName} {employee.lastName}
-            </p>
-            <p>
-              <strong>Email:</strong> {employee.email}
-            </p>
-          </div> */}
-
           <div className="attendance-summary">
             <h2>Attendance Summary</h2>
             <p>
@@ -171,6 +160,11 @@ const AdminAttendance = () => {
                 ))}
               </tbody>
             </table>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPage}
+              onPageChange={handlePageChage}
+            />
           </div>
         </>
       )}

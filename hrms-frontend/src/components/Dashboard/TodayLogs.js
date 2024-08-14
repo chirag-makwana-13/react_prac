@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../utils/api";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import "./Dashboard.css";
 
 const TodayLogs = () => {
   const [todaylogs, setTodaylogs] = useState([]);
   const [searchTodaylogs, setSearchtodaylogs] = useState("");
   const [error, setError] = useState("");
-  const { role } = useSelector((state) => state.role);
+  // const { role } = useSelector((state) => state.role);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -3,7 +3,7 @@ import axios from "../../utils/api";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale, // Register the category scale
+  CategoryScale,
   LinearScale,
   BarElement,
   Title,
@@ -13,7 +13,6 @@ import {
 
 import "./Dashboard.css";
 
-// Registering the components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -64,8 +63,8 @@ const Attendance = () => {
     var h = Math.floor(d / 3600);
     var m = Math.floor((d % 3600) / 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " hrs, " : " hrs, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " mins " : " mins ") : "";
+    var hDisplay = h > 0 ? h + (h === 1 ? " hrs, " : " hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m === 1 ? " mins " : " mins ") : "";
     return hDisplay + mDisplay;
   }
 
