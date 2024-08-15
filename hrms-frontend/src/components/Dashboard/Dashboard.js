@@ -12,24 +12,24 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <div className="upper-container">
           <section className="dashboard-section">
-            <Birthday/>
+            <Birthday />
           </section>
           <section className="dashboard-section">
-            <Holiday/>
+            <Holiday />
           </section>
         </div>
         <section className="middle">
-            <Attendance/>
+          <Attendance />
         </section>
         <div className="lower-container">
-            <Logs/>
+          <Logs />
         </div>
       </div>
       <section className="todaylogs-section">
-            <TodayLogs/>
+        <TodayLogs />
       </section>
     </div>
   );
-}; 
+};
 
 export default Dashboard;

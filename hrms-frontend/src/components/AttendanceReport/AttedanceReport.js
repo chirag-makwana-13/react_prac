@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "../../utils/api";
 import "./AttedanceReport.css";
 import Pagination from "../Pagination";
-import AdminAttendance from "./AdminAttendance ";
+import AdminAttendance from "./AdminAttendance ";   
 
 const AttedanceReport = () => {
   const [attendancereport, setAttedancereport] = useState([]);
@@ -21,7 +21,7 @@ const AttedanceReport = () => {
   const [customStartDate, setCustomStartDate] = useState("");
   const [customEndDate, setCustomEndDate] = useState("");
 
-  const { role } = useSelector((state) => state.role); 
+  const { role } = useSelector((state) => state.role);
 
   useEffect(() => {
     const fetchData = async () => {

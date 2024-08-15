@@ -3,7 +3,7 @@ import React from "react";
 const Map = () => {
   return (
     <div className="">
-      <div style={{width: "1600px", margin:"0px auto"}}>
+      <div style={{ width: "1600px", margin: "0px auto" }}>
         <iframe
           title="map"
           width="100%"

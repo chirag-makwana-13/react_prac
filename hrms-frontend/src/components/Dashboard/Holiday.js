@@ -73,7 +73,7 @@ const Holiday = () => {
 
       const holidaysResponse = await axios.get("/holidays/");
       setHolidays(holidaysResponse.data);
-      setShowUpdateHolidayModal(false);
+      setShowUpdateHolidayModal(false); 
       setNewHoliday({ name: "", date: "", holiday_image: null });
     } catch (error) {
       console.error("Failed to update holiday:", error);

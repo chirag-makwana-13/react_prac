@@ -1,9 +1,6 @@
 import HrmsRoutes from "./routes/Routes";
 const App = () => {
-
-  return (
-    <HrmsRoutes/>
-  );
+  return <HrmsRoutes />;
 };
 
 export default App;

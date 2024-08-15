@@ -16,7 +16,11 @@
   align-items: center;
 }
 
-.slcard, .plcard, .tlcard, .ulcard, .clcard {
+.slcard,
+.plcard,
+.tlcard,
+.ulcard,
+.clcard {
   margin-bottom: 15px;
   padding: 25px;
   border-radius: 10px;
@@ -48,8 +52,8 @@
   margin-bottom: 20px;
 }
 
-.add-leave-button, .remove-leave-button {
-
+.add-leave-button,
+.remove-leave-button {
   color: white;
   border: none;
   padding: 10px 20px;
@@ -62,16 +66,16 @@
   margin-top: 10px;
 }
 
-.add-leave-button{
-  background-color: #4CAF50;
+.add-leave-button {
+  background-color: #4caf50;
 }
 
-.remove-leave-button{
+.remove-leave-button {
   background-color: #b43838;
   margin-left: 10px;
 }
 
-.remove-leave-button:hover{
+.remove-leave-button:hover {
   background-color: #a04545;
 }
 
@@ -124,7 +128,7 @@
 }
 
 .leave-card .approve-button {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -140,7 +144,6 @@
   margin-top: 20px;
 }
 
-
 .leave-table {
   width: 1400px;
   border-collapse: collapse;
@@ -150,7 +153,8 @@
   overflow: hidden;
 }
 
-.leave-table th, .leave-table td {
+.leave-table th,
+.leave-table td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
