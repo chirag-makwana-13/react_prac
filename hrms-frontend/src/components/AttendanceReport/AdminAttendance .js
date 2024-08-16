@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "../../utils/api";
 import "./AdminAttendance.css";
 import ParticularAttendance from "./ParticularAttendance";
+import TodayAttendance from "./TodayAttendance"; // Import the new component
 
 const AdminAttendance = () => {
   const [employees, setEmployees] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
   const [viewAttendance, setViewAttendance] = useState(false);
+  const [viewTodayAttendance, setViewTodayAttendance] = useState(false); // State for today's attendance
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -25,10 +27,16 @@ const AdminAttendance = () => {
 
   const handleBackToEmployeeList = () => {
     setViewAttendance(false);
+    setViewTodayAttendance(false); // Reset to employee list
   };
 
   const handleAttendanceData = (id) => {
     setViewAttendance(true);
+    setUserId(id);
+  };
+
+  const handleTodayAttendanceData = (id) => {
+    setViewTodayAttendance(true);
     setUserId(id);
   };
 
@@ -37,14 +45,14 @@ const AdminAttendance = () => {
       <h1>Admin Attendance View</h1>
       {error && <p className="error-message">{error}</p>}
 
-      {!viewAttendance ? (
+      {!viewAttendance && !viewTodayAttendance ? (
         <table className="employee-table">
           <thead>
             <tr>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -60,16 +68,25 @@ const AdminAttendance = () => {
                   >
                     Show Attendance
                   </button>
+                  <button
+                    onClick={() => handleTodayAttendanceData(emp.id)}
+                    className="today-button"
+                  >
+                    Today Log
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      ) : (
+      ) : viewAttendance ? (
         <ParticularAttendance id={userId} hide={handleBackToEmployeeList} />
+      ) : (
+        <TodayAttendance id={userId} hide={handleBackToEmployeeList} />
       )}
     </div>
   );
 };
 
 export default AdminAttendance;
+                           

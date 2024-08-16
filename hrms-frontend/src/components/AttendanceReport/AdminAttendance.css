@@ -36,7 +36,7 @@
   background-color: #ddd;
 }
 
-.attendance-button {
+.attendance-button, .today-button {
   padding: 10px 15px;
   background-color: #002f4b;
   color: white;
@@ -48,6 +48,14 @@
 
 .attendance-button:hover {
   background-color: #00507a;
+}
+
+.today-button:hover{
+  background-color: rgb(79, 96, 153);
+}
+
+.today-button{
+  margin-left: 10px;
 }
 
 .employee-details,
