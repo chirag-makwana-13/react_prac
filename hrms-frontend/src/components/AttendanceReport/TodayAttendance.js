@@ -5,6 +5,7 @@ import "./TodayAttendance.css";
 const TodayAttendance = ({ id, hide }) => {
   const [todayLog, setTodayLog] = useState([]);
   const [error, setError] = useState(null);
+  const [updateTime, setUpdateTime] = useState(""); // State for input time
 
   useEffect(() => {
     const fetchTodayLog = async () => {
@@ -22,11 +23,16 @@ const TodayAttendance = ({ id, hide }) => {
 
   const handleUpdateStatusTime = async (logId) => {
     try {
+      // Get today's date in YYYY-MM-DD format
+      const todayDate = new Date().toISOString().split('T')[0];
+      // Combine the date with the input time
+      const formattedDateTime = `${todayDate}T${updateTime}:00`;
+
       const response = await axios.put(`/todayEmployeeActivity/${logId}/`, {
-        status_time: new Date().toISOString(), // Update with current time
+        status_time: formattedDateTime, // Use the formatted datetime string
       });
-      setTodayLog((prevLogs)=>
-        prevLogs.map((log)=>
+      setTodayLog((prevLogs) =>
+        prevLogs.map((log) =>
           log.id === logId ? { ...log, status_time: response.data.status_time } : log
         )
       );
@@ -59,6 +65,12 @@ const TodayAttendance = ({ id, hide }) => {
               <td>{log.status}</td>
               <td>{new Date(log.status_time).toLocaleTimeString()}</td>
               <td>
+                <input
+                  type="time"
+                  value={updateTime}
+                  onChange={(e) => setUpdateTime(e.target.value)}
+                  className="time-input"
+                />
                 <button
                   onClick={() => handleUpdateStatusTime(log.id)}
                   className="update-button"
@@ -75,4 +87,3 @@ const TodayAttendance = ({ id, hide }) => {
 };
 
 export default TodayAttendance;
-    

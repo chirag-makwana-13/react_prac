@@ -38,3 +38,9 @@
 .back-button:hover {
   background-color: #e53935;
 }
+
+.time-input {
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 1rem;
+}
