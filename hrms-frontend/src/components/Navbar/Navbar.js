@@ -28,7 +28,7 @@ const Navbar = ({ handleLogout }) => {
             >
               Dashboard
             </Link>
-          </li>
+          </li> 
           <li>
             <Link
               to="/employees"
@@ -54,7 +54,7 @@ const Navbar = ({ handleLogout }) => {
             </Link>
           </li>
           <li>
-            <Link
+            <Link 
               to="/calendar"
               className={activeLink === "calendar" ? "active" : ""}
             >
@@ -65,7 +65,7 @@ const Navbar = ({ handleLogout }) => {
             <Link to="/map" className={activeLink === "map" ? "active" : ""}>
               Map
             </Link>
-          </li>
+          </li> 
           <li>
             <Link
               to="/changepassword"

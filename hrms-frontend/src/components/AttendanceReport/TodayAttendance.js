@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/api";
-import "./TodayAttendance.css";
 
 const TodayAttendance = ({ id, hide }) => {
   const [todayLog, setTodayLog] = useState([]);
   const [error, setError] = useState(null);
-  const [updateTime, setUpdateTime] = useState(""); // State for input time
+  const [updateTime, setUpdateTime] = useState("");
 
   useEffect(() => {
     const fetchTodayLog = async () => {
       try {
-        const response = await axios.get(`/todayEmployeeActivity/${id}/`);
-        setTodayLog([response.data]);
+        const response = await axios.get(`/todayEmployeeActivity/`, {
+          params: { emp_id: id },
+        });
+        setTodayLog(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching today's attendance:", error);
         setError("Failed to fetch today's attendance.");
@@ -21,19 +23,28 @@ const TodayAttendance = ({ id, hide }) => {
     fetchTodayLog();
   }, [id]);
 
-  const handleUpdateStatusTime = async (logId) => {
+  const handleUpdateStatusTime = async (logId, status, previous) => {
     try {
-      // Get today's date in YYYY-MM-DD format
-      const todayDate = new Date().toISOString().split('T')[0];
-      // Combine the date with the input time
+      const todayDate = new Date().toISOString().split("T")[0];
+      console.log(updateTime);
       const formattedDateTime = `${todayDate}T${updateTime}:00`;
-
+      console.log(formattedDateTime);
       const response = await axios.put(`/todayEmployeeActivity/${logId}/`, {
-        status_time: formattedDateTime, // Use the formatted datetime string
+        status_time: formattedDateTime, 
+        status,
+        previous,
       });
       setTodayLog((prevLogs) =>
         prevLogs.map((log) =>
-          log.id === logId ? { ...log, status_time: response.data.status_time } : log
+          log.id === logId
+            ? {
+                ...log,
+                status_time: response.data.status_time,
+                // status_time: new Date(
+                //   response.data.status_time
+                // ).toLocaleTimeString(),
+              }
+            : log
         )
       );
     } catch (error) {
@@ -43,11 +54,13 @@ const TodayAttendance = ({ id, hide }) => {
   };
 
   return (
-    <div className="today-attendance-container">
+    <div className="today-attendance-container" style={{padding:"20px"}}>
       <h2>Today's Attendance</h2>
       {error && <p className="error-message">{error}</p>}
-      <button onClick={hide} className="back-button">Back to Employee List</button>
-      <table className="today-log-table">
+      <button onClick={hide} className="attendance-button back" style={{marginBottom:"20px"}}>
+        Back to Employee List
+      </button>
+      <table className="employee-table">
         <thead>
           <tr>
             <th>First Name</th>
@@ -69,11 +82,17 @@ const TodayAttendance = ({ id, hide }) => {
                   type="time"
                   value={updateTime}
                   onChange={(e) => setUpdateTime(e.target.value)}
-                  className="time-input"
+                  style={{
+                    marginRight:"10px",
+                    padding:"5px",
+                    fontSize:"1rem"
+                  }}
                 />
                 <button
-                  onClick={() => handleUpdateStatusTime(log.id)}
-                  className="update-button"
+                  onClick={() =>
+                    handleUpdateStatusTime(log.id, log.status, log.status_time)
+                  }
+                  className="yes-button"
                 >
                   Update Status Time
                 </button>
