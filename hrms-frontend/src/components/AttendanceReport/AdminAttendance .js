@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "../../utils/api";
 import "./AdminAttendance.css";
 import ParticularAttendance from "./ParticularAttendance";
-import TodayAttendance from "./TodayAttendance"; // Import the new component
+import TodayAttendance from "./TodayAttendance";
 
 const AdminAttendance = () => {
   const [employees, setEmployees] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
   const [viewAttendance, setViewAttendance] = useState(false);
-  const [viewTodayAttendance, setViewTodayAttendance] = useState(false); // State for today's attendance
+  const [viewTodayAttendance, setViewTodayAttendance] = useState(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -27,7 +27,7 @@ const AdminAttendance = () => {
 
   const handleBackToEmployeeList = () => {
     setViewAttendance(false);
-    setViewTodayAttendance(false); // Reset to employee list
+    setViewTodayAttendance(false);
   };
 
   const handleAttendanceData = (id) => {
