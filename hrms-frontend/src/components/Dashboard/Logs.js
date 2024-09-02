@@ -104,6 +104,16 @@ const Logs = () => {
     }
   };
 
+  const currentTime = (datetime) => {
+    const date = new Date(datetime);
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second:"2-digit",
+      hour12: true,
+    });
+  };
+
   const formatTime = (datetime) => {
     if (!datetime) return "-";
     const date = new Date(datetime);
@@ -129,7 +139,7 @@ const Logs = () => {
           <h2>Today's Action</h2>
           <p className="p">
             <strong>Date:</strong> {formatDate(currentDateTime)} <br />
-            <strong>Time:</strong> {formatTime(currentDateTime)}
+            <strong>Time:</strong> {currentTime(currentDateTime)}
           </p>
           <div className="actions">
             <button
@@ -194,13 +204,16 @@ const Logs = () => {
                           </div>
                         ))}
                       <p className="p">
-                        <strong>Check Out:</strong> {log.checkOut}
+                        <strong>Check Out:</strong> {formatTime(log.checkOut)}
                       </p>
                     </div>
                   ))}
                 </>
               ) : (
-                <h4>No logs available.</h4>
+                <>
+                  <span style={{fontSize:'100px',marginLeft:"50px"}}>&#128187;</span>
+                  <h4>No logs available.</h4>
+                </>
               )}
             </div>
           </section>

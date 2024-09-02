@@ -84,7 +84,10 @@ const TodayLogs = () => {
               ))}
             </>
           ) : (
-            <h4>No logs available.</h4>
+            <>
+              <span style={{fontSize:'100px',marginLeft:"50px"}}>&#128187;</span>
+              <h4>No logs available.</h4>
+            </>
           )}
         </div>
       </section>

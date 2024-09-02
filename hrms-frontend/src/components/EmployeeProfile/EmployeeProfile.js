@@ -17,7 +17,7 @@ const EmployeeProfile = () => {
     phone_number: "",
     address: "",
     bio: "",
-    profile: null, // file input will be handled separately
+    profile: null, 
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
@@ -26,7 +26,6 @@ const EmployeeProfile = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await api.get(`/profile/${userId}/`);
-        console.log(response, "Employee data");
         setEmployee(response.data);
         setFormData({
           first_name: response.data.first_name || "",
@@ -39,7 +38,7 @@ const EmployeeProfile = () => {
           phone_number: response.data.phone_number || "",
           address: response.data.address || "",
           bio: response.data.bio || "",
-          profile: null, // Clear profile data since it's managed separately
+          profile: null, 
         });
       } catch (error) {
         console.error("Error fetching employee data:", error);
@@ -69,7 +68,7 @@ const EmployeeProfile = () => {
     const updatedData = new FormData();
     for (const key in formData) {
       if (key === 'profile' && formData[key] !== null) {
-        updatedData.append(key, formData[key]); // Append file if selected
+        updatedData.append(key, formData[key]); 
       } else if (key !== 'profile') {
         updatedData.append(key, formData[key]);
       }

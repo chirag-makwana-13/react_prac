@@ -54,7 +54,10 @@ const AdminLeaves = () => {
                     </div>
                 ))
             ) : (
-                <p>No leaves available.</p>
+                <>
+                  <span style={{fontSize:'100px',marginLeft:"50px"}}>&#128187;</span>
+                  <p>No leaves available.</p>
+                </>
             )}
         </div>
     );

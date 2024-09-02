@@ -149,7 +149,6 @@ const Leaves = () => {
             {leaves.length > 0 ? (
               <>
                 <tbody>
-                  {console.log(leaves, "voiew")}
                   {leaves.map((allleave, index) => (
                     <tr key={allleave.id}>
                       <td>{index + 1}</td>
@@ -185,6 +184,7 @@ const Leaves = () => {
               <tbody>
                 <tr>
                   <td colSpan="12">
+                    <span style={{fontSize:'100px',marginLeft:"50px"}}>&#128187;</span>
                     <h4>No leaves list found.</h4>
                   </td>
                 </tr>
@@ -327,6 +327,7 @@ const Leaves = () => {
                 <tbody>
                   <tr>
                     <td colSpan="12">
+                      <span style={{fontSize:'100px',marginLeft:"50px"}}>&#128187;</span>
                       <h4>No leaves list found.</h4>
                     </td>
                   </tr>
