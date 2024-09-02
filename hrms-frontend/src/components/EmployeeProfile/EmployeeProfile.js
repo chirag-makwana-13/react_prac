@@ -17,7 +17,7 @@ const EmployeeProfile = () => {
     phone_number: "",
     address: "",
     bio: "",
-    profile: null,
+    profile: null, // file input will be handled separately
   });
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
@@ -26,7 +26,7 @@ const EmployeeProfile = () => {
     const fetchEmployeeData = async () => {
       try {
         const response = await api.get(`/profile/${userId}/`);
-        console.log(response, "reeeeeee");
+        console.log(response, "Employee data");
         setEmployee(response.data);
         setFormData({
           first_name: response.data.first_name || "",
@@ -39,7 +39,7 @@ const EmployeeProfile = () => {
           phone_number: response.data.phone_number || "",
           address: response.data.address || "",
           bio: response.data.bio || "",
-          profile: response.data.profile || null,
+          profile: null, // Clear profile data since it's managed separately
         });
       } catch (error) {
         console.error("Error fetching employee data:", error);
@@ -68,7 +68,11 @@ const EmployeeProfile = () => {
     e.preventDefault();
     const updatedData = new FormData();
     for (const key in formData) {
-      updatedData.append(key, formData[key]);
+      if (key === 'profile' && formData[key] !== null) {
+        updatedData.append(key, formData[key]); // Append file if selected
+      } else if (key !== 'profile') {
+        updatedData.append(key, formData[key]);
+      }
     }
 
     try {
@@ -93,6 +97,14 @@ const EmployeeProfile = () => {
       <h1>Update Your Profile</h1>
       {error && <p className="error-message">{error}</p>}
       {message && <p className="message">{message}</p>}
+      <div className="profile-image-container">
+        <img
+          src={employee.profile || "/default-profile.png"} 
+          alt="Profile"
+          className="profile-image"
+        />
+         <input type="file" name="profile" onChange={handleFileChange} style={{width:'10%', height:'10%', marginTop:'60px'}}/>
+      </div>
       <form onSubmit={handleUpdate}>
         <label>First Name:</label>
         <input
@@ -157,9 +169,7 @@ const EmployeeProfile = () => {
           value={formData.bio}
           onChange={handleChange}
         />
-        <label>Profile Image:</label>
-        <input type="file" name="profile" onChange={handleFileChange} />
-        <button type="submit">Update</button>
+        <button type="submit" className="login-button" style={{width:'10%'}}>Update</button>
       </form>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../utils/api";
-// import { useSelector } from "react-redux";
 import "./Dashboard.css";
 
 const Logs = () => {
@@ -12,8 +11,7 @@ const Logs = () => {
     breakOut: true,
     checkOut: true,
   });
-
-  // const { role } = useSelector((state) => state.role);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +29,12 @@ const Logs = () => {
     };
 
     fetchData();
+
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId); 
   }, []);
 
   const updateButtonState = (logs) => {
@@ -100,10 +104,9 @@ const Logs = () => {
     }
   };
 
-  const formatTime1 = (datetime) => {
+  const formatTime = (datetime) => {
     if (!datetime) return "-";
     const date = new Date(datetime);
-    // Check if the date is valid
     if (isNaN(date.getTime())) return "Invalid Date";
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -112,12 +115,22 @@ const Logs = () => {
     });
   };
 
+  const formatDate = (date) => {
+    if (!date) return "-";
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-GB", options); 
+  };
+
   return (
     <div>
       <div>
         <div className="lower-container">
           {error && <p className="error-message">{error}</p>}
           <h2>Today's Action</h2>
+          <p className="p">
+            <strong>Date:</strong> {formatDate(currentDateTime)} <br />
+            <strong>Time:</strong> {formatTime(currentDateTime)}
+          </p>
           <div className="actions">
             <button
               onClick={() => handleAction("checkin")}
@@ -165,23 +178,23 @@ const Logs = () => {
                   {logs.map((log, index) => (
                     <div key={index} className="login-card">
                       <p className="p">
-                        <strong>Check In:</strong> {formatTime1(log.checkIn)}
+                        <strong>Check In:</strong> {formatTime(log.checkIn)}
                       </p>
                       {log.breaks.length > 0 &&
                         log.breaks.map((breakItem, index) => (
                           <div key={index}>
                             <p className="p">
                               <strong>Break In:</strong>{" "}
-                              {formatTime1(breakItem.breakIn)}
+                              {formatTime(breakItem.breakIn)}
                             </p>
                             <p className="p">
                               <strong>Break Out:</strong>{" "}
-                              {formatTime1(breakItem.breakOut)}
+                              {formatTime(breakItem.breakOut)}
                             </p>
                           </div>
                         ))}
                       <p className="p">
-                        <strong>Check Out:</strong> {formatTime1(log.checkOut)}
+                        <strong>Check Out:</strong> {log.checkOut}
                       </p>
                     </div>
                   ))}

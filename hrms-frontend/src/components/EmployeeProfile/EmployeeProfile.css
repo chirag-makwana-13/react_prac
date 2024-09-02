@@ -1,5 +1,18 @@
 .employee-profile-container {
   padding: 20px;
+  margin-top: -225px;
+}
+
+.profile-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-image {
+  width: 300px; 
+  height: 300px;
+  border-radius: 50%; 
+  object-fit: cover;
 }
 
 .error-message {
@@ -8,4 +21,17 @@
 
 .message {
   color: green;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input {
+  margin-bottom: 10px;
 }
